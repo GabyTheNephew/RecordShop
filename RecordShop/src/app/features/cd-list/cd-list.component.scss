@@ -1,0 +1,20 @@
+.our-cds-container {
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.our-cds-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.cd-list-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}

@@ -1,0 +1,8 @@
+<div class="our-vinyls-container">
+    <div class="our-vinyls-title">Our Vinyls</div>
+    <div class="vinyl-list-container">
+        @for (vinyl of smallVinylList; track $index) {
+        <app-vinyl [vinylCard]="vinyl" (selectedVinylName)="onAlbumSelect($event)"></app-vinyl>
+        }
+    </div>
+</div>

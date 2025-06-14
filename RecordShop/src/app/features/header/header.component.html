@@ -1,0 +1,43 @@
+<div class="header-container">
+    <div class="image-container">
+        <img src="HeaderImage.jpg" class="header-image">
+        <div class="button-container">
+            <p class="header-title">You like blessing your ears?</p>
+            <p class="header-subtitle">Get your favourite records at a good price</p>
+            <button>Order Now!</button>
+            <div class="selected-album-container">
+                <span>Your album: </span>
+                {{musicShopService.title()}}
+            </div>
+        </div>
+    </div>
+    <div class="menu-banner-container">
+        <div class="banner-item">
+            <p>Vinyls</p>
+            <img src="vinyl-icon.svg">
+        </div>
+        <div class="banner-item">
+            <p>CDs</p>
+            <img src="cd-icon.svg">
+        </div>
+        <div class="banner-item">
+            <p>Pickups</p>
+            <img src="pickup-icon.svg">
+        </div>
+        <div class="banner-item">
+            <p>CD players</p>
+            <img src="cd-player-icon.svg">
+        </div>
+    </div>
+</div>
+<div class="search-container">
+    <input [(ngModel)]="searchInput" type="text" placeholder="Enter an album name" class="search-input">
+    <button (click)="searchAlbums()">
+        Search
+    </button>
+</div>
+<div class="searched-card-container">
+    @for (album of searchedAlbums; track album) {
+    <app-vinyl [vinylCard]="album"></app-vinyl>
+    }
+</div>

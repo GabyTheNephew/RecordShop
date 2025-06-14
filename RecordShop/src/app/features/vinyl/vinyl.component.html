@@ -1,0 +1,15 @@
+<div class="card-container">
+    <div class="images-container">
+        <img [src]="vinylImage" alt="Album cover" class="image-container">
+        <img [src]="vinylDiscImage" class="disc-image">
+    </div>
+    <div class="text-container">
+        {{vinylText}}
+    </div>
+    <div class="card-footer">
+        <p class="card-price">
+            {{vinylPrice}}
+        </p>
+        <button class="card-button" (click)="orderNowButton()">Order now!</button>
+    </div>
+</div>

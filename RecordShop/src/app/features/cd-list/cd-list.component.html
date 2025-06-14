@@ -1,0 +1,8 @@
+<div class="our-cds-container">
+    <div class="our-cds-title">Our CDs</div>
+    <div class="cd-list-container">
+        @for (cd of smallCdList; track $index) {
+        <app-cd [cdCard]="cd" (selectedCdName)="selectCd($event)"></app-cd>
+        }
+    </div>
+</div>

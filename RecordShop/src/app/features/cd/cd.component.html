@@ -1,0 +1,13 @@
+<div class="card-container">
+    <img [src]="cdImage" alt="Album cover" class="image-container">
+
+    <div class="text-container">
+        {{cdText}}
+    </div>
+    <div class="card-footer">
+        <p class="card-price">
+            {{cdPrice}}
+        </p>
+        <button class="card-button" (click)="onOrderNow()">Order now!</button>
+    </div>
+</div>

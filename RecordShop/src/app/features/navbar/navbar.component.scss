@@ -1,0 +1,34 @@
+:host {
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
+}
+
+.navbar-container {
+    display: flex;
+    flex-direction: row;
+    background-color: rgba(0, 0, 0, 0.196);
+    height: 10vh;
+    color: white;
+    // justify-items: center;
+    align-items: center;
+    justify-content: space-around;
+    align-content: center;
+    font-weight: 600;
+}
+
+.logo {
+    display: flex;
+    flex-direction: row;
+    justify-items: left;
+    align-items: left;
+    width: 1vw;
+}
+
+.navbar-content ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: space-around;
+}

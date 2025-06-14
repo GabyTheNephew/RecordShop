@@ -1,0 +1,36 @@
+.footer-container-banner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 35vh;
+    background-color: #FFC36B;
+    margin-top: 7vh;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    justify-items: left;
+}
+
+.footer-container-banner p {
+    font-weight: 600;
+    font-size: 3rem;
+    margin: 4vh 0;
+}
+
+.footer-button {
+    background-color: #8D2719;
+    width: 10vw;
+    height: 6vh;
+    color: white;
+    border: none;
+    border-radius: .3rem;
+    font-weight: 700;
+}
+
+.footer-button:hover {
+    background-color: #903d32;
+    cursor: pointer;
+}
