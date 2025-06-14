@@ -4,7 +4,7 @@
         <div class="button-container">
             <p class="header-title">You like blessing your ears?</p>
             <p class="header-subtitle">Get your favourite records at a good price</p>
-            <button>Order Now!</button>
+            <button nz-button nzType="primary" nzSize="large">Order Now!</button>
             <div class="selected-album-container">
                 <span>Your album: </span>
                 {{musicShopService.title()}}
@@ -32,7 +32,7 @@
 </div>
 <div class="search-container">
     <input [(ngModel)]="searchInput" type="text" placeholder="Enter an album name" class="search-input">
-    <button (click)="searchAlbums()">
+    <button nz-button nzType="primary" (click)="searchAlbums()">
         Search
     </button>
 </div>

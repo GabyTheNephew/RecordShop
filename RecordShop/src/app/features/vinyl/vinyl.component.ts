@@ -2,11 +2,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { VinylContainers } from '../../core/interfaces/vinyl-containers';
 import { VinylContainer } from '../../core/interfaces/vinyl.interface';
 import { MusicShopService } from '../../core/services/music-shop.service';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-vinyl',
   standalone: true,
-  imports: [],
+  imports: [NzButtonModule],
   templateUrl: './vinyl.component.html',
   styleUrl: './vinyl.component.scss'
 })
