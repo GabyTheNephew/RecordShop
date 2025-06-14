@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { CdContainer } from '../../core/interfaces/cd.interface';
-import { CdContainers } from '../../core/interfaces/cd-containers';
+import { CdContainer } from '../../../core/interfaces/cd.interface';
+import { CdContainers } from '../../../core/interfaces/cd-containers';
 import { CdComponent } from "../cd/cd.component";
-import { CdService } from '../../core/services/cd.service';
-import { MusicShopService } from '../../core/services/music-shop.service';
+import { CdService } from '../../../core/services/cd.service';
+import { MusicShopService } from '../../../core/services/music-shop.service';
 
 @Component({
   selector: 'app-cd-list',

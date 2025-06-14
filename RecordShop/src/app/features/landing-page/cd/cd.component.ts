@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CdContainer } from '../../core/interfaces/cd.interface';
+import { CdContainer } from '../../../core/interfaces/cd.interface';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({

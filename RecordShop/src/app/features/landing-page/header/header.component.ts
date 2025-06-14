@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MusicShopService } from '../../core/services/music-shop.service';
-import { VinylContainer } from '../../core/interfaces/vinyl.interface';
+import { MusicShopService } from '../../../core/services/music-shop.service';
+import { VinylContainer } from '../../../core/interfaces/vinyl.interface';
 import { VinylComponent } from "../vinyl/vinyl.component";
 import { Observable } from 'rxjs';
 import { NzButtonModule } from 'ng-zorro-antd/button';
