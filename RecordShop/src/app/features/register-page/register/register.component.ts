@@ -14,33 +14,31 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzFormModule, NzFormTooltipIcon } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { Router, RouterLink } from '@angular/router';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, NzButtonModule, NzCheckboxModule, NzFormModule, NzInputModule, NzSelectModule],
+  imports: [ReactiveFormsModule, NzButtonModule, NzCheckboxModule, NzFormModule, NzInputModule, NzSelectModule, RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
   private fb = inject(NonNullableFormBuilder);
+  private router = inject(Router); // ← INJECT ROUTER
   private destroy$ = new Subject<void>();
+
   validateForm = this.fb.group({
     email: this.fb.control('', [Validators.email, Validators.required]),
     password: this.fb.control('', [Validators.required]),
-    checkPassword: this.fb.control('', [Validators.required, this.confirmationValidator]),
+    checkPassword: this.fb.control('', [Validators.required]),
     nickname: this.fb.control('', [Validators.required]),
-    phoneNumberPrefix: this.fb.control<'+86' | '+87'>('+86'),
-    phoneNumber: this.fb.control('', [Validators.required]),
-    website: this.fb.control('', [Validators.required]),
-    captcha: this.fb.control('', [Validators.required]),
     agree: this.fb.control(false)
   });
-  captchaTooltipIcon: NzFormTooltipIcon = {
-    type: 'info-circle',
-    theme: 'twotone'
-  };
 
   ngOnInit(): void {
+    // Adaugă validator-ul după ce formularul este inițializat
+    this.validateForm.controls.checkPassword.addValidators([this.confirmationValidator.bind(this)]);
+
     this.validateForm.controls.password.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.validateForm.controls.checkPassword.updateValueAndValidity();
     });
@@ -54,6 +52,11 @@ export class RegisterComponent {
   submitForm(): void {
     if (this.validateForm.valid) {
       console.log('submit', this.validateForm.value);
+
+      // Simulează procesul de înregistrare (aici ai pune logica de register)
+      // După succes, redirect la home:
+      this.router.navigate(['/home']);
+
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {
@@ -71,9 +74,5 @@ export class RegisterComponent {
       return { confirm: true, error: true };
     }
     return {};
-  }
-
-  getCaptcha(e: MouseEvent): void {
-    e.preventDefault();
   }
 }
