@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CdContainer } from '../../core/interfaces/cd.interface';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-cd',
   standalone: true,
-  imports: [],
+  imports: [NzButtonModule],
   templateUrl: './cd.component.html',
   styleUrl: './cd.component.scss'
 })
