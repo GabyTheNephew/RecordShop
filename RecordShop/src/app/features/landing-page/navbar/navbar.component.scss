@@ -1,34 +1,70 @@
-:host {
-    position: absolute;
-    width: 100%;
-    z-index: 1000;
-}
+$bg-navbar   : rgba(0, 0, 0, .85);
+$brand-color : #fff;
+$link-color  : #f5f5f5;
+$link-hover  : #d0a772;
+$font-family : 'Poppins', sans-serif;
 
-.navbar-container {
+.navbar {
+  position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+  background: $bg-navbar !important; backdrop-filter: blur(2px);
+  padding: .75rem 2rem;
+
+  .container-fluid { display: flex; align-items: center; justify-content: space-between; }
+
+  &-brand { font:600 1.25rem/1 $font-family; color:$brand-color !important; text-transform: uppercase; }
+
+  &-toggler      { border: none; }
+  &-toggler-icon { filter: invert(1); }
+
+  &-collapse { flex: 1; display: flex !important; align-items: center; justify-content: space-between; }
+
+  .navbar-nav {
+    flex: 1;
     display: flex;
-    flex-direction: row;
-    background-color: rgba(0, 0, 0, 0.196);
-    height: 10vh;
-    color: white;
-    // justify-items: center;
+    justify-content: space-evenly;
     align-items: center;
-    justify-content: space-around;
-    align-content: center;
-    font-weight: 600;
-}
-
-.logo {
-    display: flex;
-    flex-direction: row;
-    justify-items: left;
-    align-items: left;
-    width: 1vw;
-}
-
-.navbar-content ul {
     list-style: none;
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    justify-content: space-around;
+    margin: 0; padding: 0;
+
+    .nav-link {
+      font: 1.05rem/1 $font-family;
+      text-transform: uppercase;
+      color: $link-color !important;
+      transition: color .2s ease;
+
+      &.active, &:hover { color: $link-hover !important; }
+    }
+    .user { cursor: default; }
+  }
+
+  .search-form { margin-left: .5rem; }
+  .search-input {
+    width: 180px; background: transparent; color: $link-color;
+    border: 1px solid rgba(255,255,255,.25);
+    padding: .4rem .75rem; font: 1rem/1 $font-family;
+    transition: width .25s ease, border-color .2s ease;
+    &::placeholder { color: rgba(245,245,245,.65); }
+    &:focus { outline:none; width: 240px; border-color: $link-hover; }
+  }
+}
+
+.order-banner {
+  position: sticky;
+  top: 56px;               
+  z-index: 900;
+  width: 100%;
+  text-align: center;
+  padding: .6rem 1rem;
+  background: rgba(0,0,0,.75);
+  color: $link-hover;
+  font-family: $font-family;
+  font-size: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,.3);
+
+  strong { color: #fff; }
+}
+
+.search-input.no-result::placeholder {
+  color: #fff; 
+  text-transform: uppercase;
 }

@@ -1,5 +1,17 @@
 <app-navbar></app-navbar>
 <app-header></app-header>
-<app-vinyl-list></app-vinyl-list>
-<app-cd-list></app-cd-list>
+@if (hasSearchTerm) {
+  <div class="search-results-section">     
+    <h2 class="results-title">Search result:</h2>
+    <div class="search-results-container">  
+      @for (album of searchResults; track album.image) {
+        <app-vinyl [vinylCard]="album"></app-vinyl>  
+      }
+    </div>
+  </div>
+}
+<app-vinyl-list id="vinyl-section"></app-vinyl-list>
+<app-cd-list id="cd-section"></app-cd-list>
+
+
 <app-footer></app-footer>

@@ -4,4 +4,5 @@ export interface VinylContainer
     discImage: string
     text: string
     price: number
+    
 }

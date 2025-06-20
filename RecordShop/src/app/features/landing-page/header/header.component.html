@@ -5,10 +5,6 @@
             <p class="header-title">You like blessing your ears?</p>
             <p class="header-subtitle">Get your favourite records at a good price</p>
             <button nz-button nzType="primary" nzSize="large">Order Now!</button>
-            <div class="selected-album-container">
-                <span>Your album: </span>
-                {{musicShopService.title()}}
-            </div>
         </div>
     </div>
     <div class="menu-banner-container">
@@ -30,14 +26,13 @@
         </div>
     </div>
 </div>
-<div class="search-container">
-    <input [(ngModel)]="searchInput" type="text" placeholder="Enter an album name" class="search-input">
-    <button nz-button nzType="primary" (click)="searchAlbums()">
-        Search
-    </button>
-</div>
-<div class="searched-card-container">
-    @for (album of searchedAlbums; track album) {
-    <app-vinyl [vinylCard]="album"></app-vinyl>
-    }
-</div>
+<!-- @if (musicShopService.getSearchResults().length > 0) {
+    <div class="search-results-section">
+        <h3 class="results-title">Your results:</h3>
+        <div class="searched-card-container">
+            @for (album of musicShopService.getSearchResults(); track album) {
+                <app-vinyl [vinylCard]="album"></app-vinyl>
+            }
+        </div>
+    </div>
+} -->

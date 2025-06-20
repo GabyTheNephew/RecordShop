@@ -1,16 +1,38 @@
-<div class="navbar-container">
-    <div class="logo">
-        Logo
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" (click)="goToTop()">Viniloteca</a>
+
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse" data-bs-target="#navContent"
+            aria-controls="navContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" (click)="goToTop()">Home</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="goToVinyls()">Vinyls</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="goToCDs()">CDs</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/shop">Shop</a></li>
+        
+        <!-- Schimbat Login cu All -->
+        <li class="nav-item"><a class="nav-link" (click)="goToAll()">All</a></li>
+      </ul>
+      
+
+      <form class="d-flex search-form ms-2"
+            (submit)="onSearch(searchInput.value,searchInput); $event.preventDefault()">
+        <input #searchInput type="search"
+               class="form-control me-2 search-input"
+               placeholder="Search albums, artists..." aria-label="Search">
+      </form>
     </div>
-    <div class="navbar-content">
-        <ul>
-            <li>Vinyls</li>
-            <li>CDs</li>
-            <li>Shop</li>
-            <li>About</li>
-        </ul>
-    </div>
-    <div>
-        Search
-    </div>
-</div>
+  </div>
+</nav>
+
+<!-- @if (cart.labelSignal(); as lbl) {
+  <div class="order-banner">
+    In your cart:&nbsp;<strong>{{ lbl }}</strong>
+  </div>
+} -->
