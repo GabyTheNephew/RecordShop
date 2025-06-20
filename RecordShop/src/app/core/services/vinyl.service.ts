@@ -12,7 +12,7 @@ export class VinylService {
 
   constructor() {
     this.vinylList = VinylContainers;
-    this.smallVinylList = this.vinylList.slice(0, 4);
+    this.smallVinylList = this.vinylList;
   }
 
 }

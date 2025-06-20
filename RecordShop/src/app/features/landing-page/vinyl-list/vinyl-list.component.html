@@ -1,8 +1,50 @@
 <div class="our-vinyls-container">
     <div class="our-vinyls-title">Our Vinyls</div>
-    <div class="vinyl-list-container">
-        @for (vinyl of smallVinylList; track $index) {
-        <app-vinyl [vinylCard]="vinyl" (selectedVinylName)="onAlbumSelect($event)"></app-vinyl>
+    
+    <div class="vinyl-carousel-container">
+        <!-- Buton navigare stânga -->
+        <button 
+            class="carousel-nav-btn carousel-nav-prev" 
+            (click)="goToPrevious()"
+            [disabled]="!canGoPrevious"
+            *ngIf="canGoPrevious">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15,18 9,12 15,6"></polyline>
+            </svg>
+        </button>
+
+        <!-- Container pentru vinilurile vizibile -->
+        <div class="vinyl-list-container">
+            <div class="vinyl-slider" 
+                 [style.transform]="'translateX(-' + (currentIndex * (100 / itemsPerView)) + '%)'">
+                @for (vinyl of smallVinylList; track $index) {
+                    <div class="vinyl-slide">
+                        <app-vinyl [vinylCard]="vinyl" (selectedVinylName)="onAlbumSelect($event)"></app-vinyl>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Buton navigare dreapta -->
+        <button 
+            class="carousel-nav-btn carousel-nav-next" 
+            (click)="goToNext()"
+            [disabled]="!canGoNext"
+            *ngIf="canGoNext">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9,18 15,12 9,6"></polyline>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Indicatori de navigație (puncte) -->
+    <div class="carousel-indicators" *ngIf="totalSlides > 1">
+        @for (indicator of slideIndicators; track indicator) {
+            <button 
+                class="carousel-indicator"
+                [class.active]="indicator === currentIndex"
+                (click)="goToSlide(indicator)">
+            </button>
         }
     </div>
 </div>
