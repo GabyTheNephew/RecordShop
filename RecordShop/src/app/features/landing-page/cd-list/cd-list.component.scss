@@ -182,6 +182,8 @@
         padding: 1rem !important;
         box-sizing: border-box !important;
         margin: 0 auto !important;
+        background: transparent !important; // Fundal transparent ca la viniluri
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
       }
       
       .images-container {
@@ -201,6 +203,9 @@
           object-fit: cover !important;
           object-position: center !important;
           border-radius: 4px !important;
+          z-index: 2 !important; // Copertă peste disc
+          transition: transform 0.3s ease !important;
+          position: relative !important;
         }
         
         .disc-image {
@@ -209,6 +214,25 @@
           max-width: 200px !important;
           max-height: 200px !important;
           object-fit: cover !important;
+          position: absolute !important;
+          top: 50% !important;
+          left: 50% !important;
+          transform: translate(-50%, -50%) !important; // Centrat perfect în container
+          z-index: 0 !important; // Disc în spate
+          opacity: 0 !important; // Invizibil inițial
+          transition: all 0.3s ease !important;
+        }
+        
+        // Efecte la hover - CD-ul iese din centrul copertei
+        &:hover {
+          .image-container {
+            transform: translateX(-15px) !important; // Copertă se mută puțin stânga
+          }
+          
+          .disc-image {
+            opacity: 1 !important; // Devine vizibil la hover
+            transform: translate(-30%, -50%) translateX(40px) !important; // Iese din centrul copertei spre dreapta
+          }
         }
       }
       
