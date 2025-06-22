@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CdContainer } from '../../../core/interfaces/cd.interface';
+import { CartService } from '../../../core/services/cart.service';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
@@ -17,6 +18,8 @@ export class CdComponent implements OnInit {
   cdText: string = '';
   cdPrice: number = 0;
 
+  constructor(private cartService: CartService) {}
+
   ngOnInit() {
     this.cdImage = this.cdCard.image;
     this.cdText = this.cdCard.text;
@@ -24,6 +27,13 @@ export class CdComponent implements OnInit {
   }
 
   onOrderNow() {
+    // Adaugă CD-ul în coș
+    this.cartService.addToCart(this.cdText, this.cdPrice, 'cd');
+    
+    // Emit evenimentul pentru componenta părinte (dacă e necesar)
     this.selectedCdName.emit(this.cdText);
+    
+    // Feedback vizual (opțional)
+    console.log(`Added "${this.cdText}" to cart`);
   }
 }

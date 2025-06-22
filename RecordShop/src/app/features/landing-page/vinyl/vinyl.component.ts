@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { VinylContainers } from '../../../core/interfaces/vinyl-containers';
 import { VinylContainer } from '../../../core/interfaces/vinyl.interface';
+import { CartService } from '../../../core/services/cart.service';
 import { MusicShopService } from '../../../core/services/music-shop.service';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 
@@ -20,7 +21,10 @@ export class VinylComponent implements OnInit {
   vinylPrice: number = 0;
   vinylDiscImage: string = '';
 
-  constructor(public musicShopService: MusicShopService) { }
+  constructor(
+    public musicShopService: MusicShopService,
+    private cartService: CartService
+  ) { }
 
   ngOnInit() {
     this.vinylImage = this.vinylCard.image;
@@ -30,6 +34,16 @@ export class VinylComponent implements OnInit {
   }
 
   orderNowButton() {
+    // Adaugă vinilul în coș
+    this.cartService.addToCart(this.vinylText, this.vinylPrice, 'vinyl');
+    
+    // Păstrează funcționalitatea existentă
     this.musicShopService.setTitle(this.vinylText);
+    
+    // Emit evenimentul pentru componenta părinte (dacă e necesar)
+    this.selectedVinylName.emit(this.vinylText);
+    
+    // Feedback vizual (opțional)
+    console.log(`Added "${this.vinylText}" to cart`);
   }
 }
