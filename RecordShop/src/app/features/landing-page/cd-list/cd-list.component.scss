@@ -64,7 +64,7 @@
 }
 
 .cd-slide {
-  flex: 0 0 33.333%;  
+  flex: 0 0 33.333%;  // 3 items per view pe desktop
   padding: 0.5rem;
   box-sizing: border-box;
   
@@ -74,12 +74,13 @@
     height: 100%;
   }
   
+  // Responsive design
   @media (max-width: 768px) {
-    flex: 0 0 50%;  
+    flex: 0 0 50%;  // 2 items per view pe tablet
   }
   
   @media (max-width: 480px) {
-    flex: 0 0 100%;  
+    flex: 0 0 100%;  // 1 item per view pe mobile
   }
 }
 
@@ -109,6 +110,7 @@
   }
 }
 
+// Responsive pentru carousel
 @media (max-width: 768px) {
   .cd-carousel-container {
     .carousel-nav-btn {
@@ -155,12 +157,171 @@
   }
 }
 
+// Stiluri pentru animații smooth și dimensiuni uniforme
 .cd-slide {
   app-cd {
     transition: transform 0.3s ease;
+    display: block;
+    height: 400px !important; // Înălțime fixă pentru toate cardurile
     
     &:hover {
       transform: translateY(-5px);
+    }
+    
+    // Forțează dimensiuni uniforme pentru cardurile CD-urilor
+    ::ng-deep {
+      .card-container {
+        height: 100% !important;
+        width: 100% !important;
+        max-width: 280px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        border-radius: 8px !important;
+        border: 2px solid #ddd !important;
+        overflow: hidden !important;
+        padding: 1rem !important;
+        box-sizing: border-box !important;
+        margin: 0 auto !important;
+      }
+      
+      .images-container {
+        height: 250px !important;
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        position: relative !important;
+        overflow: hidden !important;
+        
+        .image-container {
+          width: 100% !important;
+          height: 100% !important;
+          max-width: 200px !important;
+          max-height: 200px !important;
+          object-fit: cover !important;
+          object-position: center !important;
+          border-radius: 4px !important;
+        }
+        
+        .disc-image {
+          width: 100% !important;
+          height: 100% !important;
+          max-width: 200px !important;
+          max-height: 200px !important;
+          object-fit: cover !important;
+        }
+      }
+      
+      .text-container {
+        flex: 1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        text-align: center !important;
+        padding: 0.5rem 0 !important;
+        min-height: 60px !important;
+        
+        // Titlu album
+        h3, .album-title {
+          font-size: 0.9rem !important;
+          font-weight: bold !important;
+          margin: 0.25rem 0 !important;
+          line-height: 1.2 !important;
+          overflow: hidden !important;
+          text-overflow: ellipsis !important;
+          display: -webkit-box !important;
+          -webkit-line-clamp: 2 !important;
+          -webkit-box-orient: vertical !important;
+        }
+        
+        // Artist
+        p, .artist-name {
+          font-size: 0.8rem !important;
+          color: #666 !important;
+          margin: 0 !important;
+          overflow: hidden !important;
+          text-overflow: ellipsis !important;
+          white-space: nowrap !important;
+        }
+      }
+      
+      .card-footer {
+        height: 50px !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding-top: 0.5rem !important;
+        margin-top: auto !important;
+        
+        .card-button {
+          padding: 0.5rem 1rem !important;
+          font-size: 0.8rem !important;
+          background-color: #8D2719 !important;
+          color: white !important;
+          border: none !important;
+          border-radius: 4px !important;
+          cursor: pointer !important;
+          
+          &:hover {
+            background-color: #903d32 !important;
+          }
+        }
+      }
+    }
+  }
+  
+  // Responsive pentru dimensiuni carduri
+  @media (max-width: 768px) {
+    app-cd {
+      height: 380px !important;
+      
+      ::ng-deep {
+        .card-container {
+          max-width: 250px !important;
+          padding: 0.8rem !important;
+        }
+        
+        .images-container {
+          height: 220px !important;
+          
+          .image-container, .disc-image {
+            max-width: 180px !important;
+            max-height: 180px !important;
+          }
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 480px) {
+    app-cd {
+      height: 420px !important;
+      
+      ::ng-deep {
+        .card-container {
+          max-width: 300px !important;
+          padding: 1rem !important;
+        }
+        
+        .images-container {
+          height: 260px !important;
+          
+          .image-container, .disc-image {
+            max-width: 220px !important;
+            max-height: 220px !important;
+          }
+        }
+        
+        .text-container {
+          h3, .album-title {
+            font-size: 1rem !important;
+          }
+          
+          p, .artist-name {
+            font-size: 0.85rem !important;
+          }
+        }
+      }
     }
   }
 }
