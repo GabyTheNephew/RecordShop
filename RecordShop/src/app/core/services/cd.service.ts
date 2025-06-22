@@ -11,6 +11,6 @@ export class CdService {
 
   constructor() {
     this.cdList = CdContainers;
-    this.smallCdList = this.cdList.slice(0, 4);
+    this.smallCdList = this.cdList;
   }
 }

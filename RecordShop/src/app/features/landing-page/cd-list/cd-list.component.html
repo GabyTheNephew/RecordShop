@@ -1,8 +1,46 @@
 <div class="our-cds-container">
     <div class="our-cds-title">Our CDs</div>
-    <div class="cd-list-container">
-        @for (cd of smallCdList; track $index) {
-        <app-cd [cdCard]="cd" (selectedCdName)="selectCd($event)"></app-cd>
+    
+    <div class="cd-carousel-container">
+        <button 
+            class="carousel-nav-btn carousel-nav-prev" 
+            (click)="goToPrevious()"
+            [disabled]="!canGoPrevious"
+            *ngIf="canGoPrevious">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15,18 9,12 15,6"></polyline>
+            </svg>
+        </button>
+
+        <div class="cd-list-container">
+            <div class="cd-slider" 
+                 [style.transform]="'translateX(-' + (currentIndex * (100 / itemsPerView)) + '%)'">
+                @for (cd of smallCdList; track $index) {
+                    <div class="cd-slide">
+                        <app-cd [cdCard]="cd" (selectedCdName)="selectCd($event)"></app-cd>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <button 
+            class="carousel-nav-btn carousel-nav-next" 
+            (click)="goToNext()"
+            [disabled]="!canGoNext"
+            *ngIf="canGoNext">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9,18 15,12 9,6"></polyline>
+            </svg>
+        </button>
+    </div>
+
+    <div class="carousel-indicators" *ngIf="totalSlides > 1">
+        @for (indicator of slideIndicators; track indicator) {
+            <button 
+                class="carousel-indicator"
+                [class.active]="indicator === currentIndex"
+                (click)="goToSlide(indicator)">
+            </button>
         }
     </div>
 </div>
