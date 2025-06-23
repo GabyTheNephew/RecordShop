@@ -1,6 +1,6 @@
 .table-container {
   padding: 24px;
-  margin-top: 56px; // ADAUGĂ SPAȚIU PENTRU NAVBAR FIX
+  margin-top: 56px; // SPAȚIU PENTRU NAVBAR FIX
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -8,21 +8,73 @@
   .table-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 24px;
     padding-bottom: 16px;
     border-bottom: 1px solid #f0f0f0;
 
-    h2 {
-      margin: 0;
-      color: #262626;
-      font-size: 24px;
-      font-weight: 600;
+    .header-title-section {
+      flex: 1;
+      
+      h2 {
+        margin: 0 0 8px 0;
+        color: #262626;
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      .search-info {
+        margin: 0;
+        color: #1890ff;
+        font-size: 14px;
+        font-weight: 500;
+      }
     }
 
     .header-actions {
       display: flex;
       gap: 8px;
+      align-items: flex-start;
+    }
+  }
+
+  // Stiluri pentru secțiunea "No Results"
+  .no-results-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    background: #fafafa;
+    border-radius: 8px;
+    margin: 24px 0;
+
+    .no-results-content {
+      text-align: center;
+      padding: 2rem;
+
+      .no-results-icon {
+        font-size: 48px;
+        color: #d9d9d9;
+        margin-bottom: 16px;
+        display: block;
+      }
+
+      h3 {
+        color: #595959;
+        font-size: 18px;
+        margin-bottom: 12px;
+        font-weight: 500;
+      }
+
+      p {
+        color: #8c8c8c;
+        margin-bottom: 24px;
+        font-size: 14px;
+
+        strong {
+          color: #262626;
+        }
+      }
     }
   }
 
@@ -160,18 +212,49 @@
       gap: 16px;
       align-items: stretch;
 
-      h2 {
-        font-size: 20px;
-        text-align: center;
+      .header-title-section {
+        h2 {
+          font-size: 20px;
+          text-align: center;
+        }
+
+        .search-info {
+          text-align: center;
+        }
       }
 
       .header-actions {
         justify-content: center;
+        flex-wrap: wrap;
       }
     }
 
     .album-name {
       max-width: 120px;
+    }
+
+    .no-results-section {
+      min-height: 200px;
+      margin: 16px 0;
+
+      .no-results-content {
+        padding: 1rem;
+
+        .no-results-icon {
+          font-size: 36px;
+          margin-bottom: 12px;
+        }
+
+        h3 {
+          font-size: 16px;
+          margin-bottom: 8px;
+        }
+
+        p {
+          font-size: 13px;
+          margin-bottom: 16px;
+        }
+      }
     }
 
     ::ng-deep {
@@ -217,6 +300,15 @@
       font-size: 11px;
       padding: 2px 6px;
       min-width: 25px;
+    }
+
+    .header-actions {
+      flex-direction: column;
+      gap: 8px;
+
+      button {
+        width: 100%;
+      }
     }
 
     ::ng-deep {

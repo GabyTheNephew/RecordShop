@@ -25,6 +25,7 @@ export class MusicShopService {
 
   listOfAlbums: VinylContainer[] = VinylContainers;
   listOfCds: CdContainer[] = CdContainers;
+  currentUser$: any;
 
   constructor() {
     console.log('MusicShopService initialized');

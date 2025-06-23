@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, NavigationEnd } from '@angular/router';
 import { DOCUMENT, CommonModule } from '@angular/common';
+import { filter } from 'rxjs/operators';
 import { MusicShopService, SearchResult } from '../../../core/services/music-shop.service';
 import { VinylContainer } from '../../../core/interfaces/vinyl.interface';
 
@@ -13,12 +14,20 @@ import { VinylContainer } from '../../../core/interfaces/vinyl.interface';
 })
 export class NavbarComponent {
   searchedAlbums: SearchResult[] = [];
+  currentRoute: string = '';
 
   constructor(
     private router : Router,
     public  search : MusicShopService,
     @Inject(DOCUMENT) private doc: Document
-  ) {}
+  ) {
+    // Urmărește schimbările de rută pentru a determina contextul
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.currentRoute = event.url;
+    });
+  }
 
   goToTop() {
     // Reset complete la navigarea la top
@@ -67,9 +76,7 @@ export class NavbarComponent {
   onSearch(term: string, inputEl: HTMLInputElement) {
     console.log('=== NEW SEARCH INITIATED ===');
     console.log('Search term:', term);
-    
-    // PRIMUL PAS: Reset complet al stării anterioare
-    this.resetSearchState();
+    console.log('Current route:', this.currentRoute);
     
     // Verifică dacă termenul este gol sau doar spații
     const trimmedTerm = (term || '').trim();
@@ -81,12 +88,34 @@ export class NavbarComponent {
 
     console.log('Trimmed search term:', trimmedTerm);
     
+    // Determină contextul de căutare bazat pe ruta curentă
+    if (this.currentRoute.includes('/home')) {
+      this.searchOnHomePage(trimmedTerm, inputEl);
+    } else if (this.currentRoute.includes('/shop')) {
+      this.searchOnShopPage(trimmedTerm, inputEl);
+    } else if (this.currentRoute.includes('/inventory')) {
+      this.searchOnInventoryPage(trimmedTerm, inputEl);
+    } else {
+      // Pentru alte pagini, navighează la home și caută acolo
+      this.searchOnHomePage(trimmedTerm, inputEl);
+    }
+    
+    // Curăță input-ul în orice caz
+    inputEl.value = '';
+  }
+
+  private searchOnHomePage(term: string, inputEl: HTMLInputElement) {
+    console.log('=== SEARCHING ON HOME PAGE ===');
+    
+    // PRIMUL PAS: Reset complet al stării anterioare
+    this.resetSearchState();
+    
     // AL DOILEA PAS: Efectuează căutarea
-    const results = this.search.searchAllProducts(trimmedTerm);
+    const results = this.search.searchAllProducts(term);
     console.log('Search results found:', results);
     
     if (results.length > 0) {
-      console.log('=== SEARCH SUCCESSFUL ===');
+      console.log('=== SEARCH SUCCESSFUL ON HOME ===');
       console.log('Number of results:', results.length);
       
       // Setează rezultatele în serviciu
@@ -94,31 +123,49 @@ export class NavbarComponent {
       this.searchedAlbums = [...results]; // Copie locală
       
       // Setează titlul pentru afișare
-      this.search.setTitle(trimmedTerm);
+      this.search.setTitle(term);
       
-      // Verifică starea după setare
-      console.log('Title set to:', this.search.title());
-      console.log('Results in service:', this.search.getSearchResults().length);
-      
-      // Navighează și scroll
-      this.router.navigate(['/home']).then(() => {
-        console.log('Navigation complete, scrolling to top');
+      // Navighează la home dacă nu este deja acolo
+      if (!this.currentRoute.includes('/home')) {
+        this.router.navigate(['/home']).then(() => {
+          console.log('Navigation to home complete, scrolling to top');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      } else {
+        // Dacă suntem deja pe home, doar scroll la top
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        
-        // Verificare finală după navigare
-        setTimeout(() => {
-          console.log('Final check - Title:', this.search.title());
-          console.log('Final check - Results:', this.search.getSearchResults().length);
-        }, 100);
-      });
+      }
       
     } else {
-      console.log('=== NO RESULTS FOUND ===');
+      console.log('=== NO RESULTS FOUND ON HOME ===');
       this.showNoResultsMessage(inputEl);
     }
+  }
+
+  private searchOnShopPage(term: string, inputEl: HTMLInputElement) {
+    console.log('=== SEARCHING ON SHOP PAGE ===');
     
-    // Curăță input-ul în orice caz
-    inputEl.value = '';
+    // Emit eveniment pentru componenta shop să efectueze căutarea
+    this.search.setTitle(term);
+    
+    // Găsește rezultatele pentru validare
+    const results = this.search.searchAllProducts(term);
+    
+    if (results.length === 0) {
+      this.showNoResultsMessage(inputEl);
+    } else {
+      console.log(`Found ${results.length} results for shop page`);
+    }
+  }
+
+  private searchOnInventoryPage(term: string, inputEl: HTMLInputElement) {
+    console.log('=== SEARCHING ON INVENTORY PAGE ===');
+    
+    // Emit eveniment pentru componenta inventory să efectueze căutarea
+    this.search.setTitle(term);
+    
+    // Pentru pagina de inventory, căutarea va fi gestionată de componenta table
+    console.log(`Inventory search term set: ${term}`);
   }
 
   private showNoResultsMessage(inputEl: HTMLInputElement) {
@@ -135,6 +182,7 @@ export class NavbarComponent {
   // DEBUG METHOD - ȘTERGE DUPĂ TESTARE
   debugSearch() {
     console.log('=== NAVBAR DEBUG ===');
+    console.log('Current route:', this.currentRoute);
     console.log('Local searchedAlbums:', this.searchedAlbums.length);
     this.search.debugState();
     this.search.getCurrentSearchState();

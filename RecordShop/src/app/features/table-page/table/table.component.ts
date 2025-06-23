@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzModalModule } from 'ng-zorro-antd/modal';
@@ -11,9 +12,10 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
-import { NavbarComponent } from '../../landing-page/navbar/navbar.component'; // ADAUGĂ IMPORT
+import { NavbarComponent } from '../../landing-page/navbar/navbar.component';
 import { Table } from '../../../core/interfaces/table.interface';
 import { TableService } from '../../../core/services/table.service';
+import { MusicShopService } from '../../../core/services/music-shop.service';
 
 @Component({
   selector: 'app-table',
@@ -30,27 +32,27 @@ import { TableService } from '../../../core/services/table.service';
     NzIconModule,
     NzTagModule,
     NzInputNumberModule,
-    NavbarComponent // ADAUGĂ ÎN IMPORTS
+    NavbarComponent
   ],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit {
-closeThankYou() {
-throw new Error('Method not implemented.');
-}
-  tables: Table[] = [];
+export class TableComponent implements OnInit, OnDestroy {
+  allTables: Table[] = [];
+  filteredTables: Table[] = [];
   tableForm: FormGroup;
   isEditMode = false;
   editingTableId: number | null = null;
   isModalVisible = false;
   isLoading = false;
   pageSize = 7;
+  searchSubscription?: Subscription;
 
   constructor(
     private tableService: TableService,
     private fb: FormBuilder,
-    private message: NzMessageService
+    private message: NzMessageService,
+    public musicShopService: MusicShopService
   ) {
     this.tableForm = this.fb.group({
       controlNumber: ['', [Validators.required, Validators.pattern(/^(CD|VNL)\d{3}$/)]],
@@ -65,12 +67,92 @@ throw new Error('Method not implemented.');
 
   ngOnInit() {
     this.loadData();
+    this.setupSearchSubscription();
   }
+
+  ngOnDestroy() {
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
+    }
+  }
+
+  private lastSearchTerm: string = '';
 
   loadData() {
     this.tableService.getAll().subscribe(data => {
-      this.tables = data;
+      this.allTables = data;
+      this.filteredTables = [...data]; // Inițial afișează toate
+      this.checkForSearch(); // Verifică dacă există căutare activă
     });
+  }
+
+  private setupSearchSubscription() {
+    // Urmărește schimbările în titlul de căutare folosind polling
+    setInterval(() => {
+      this.checkForSearch();
+    }, 100); // Verifică la fiecare 100ms
+  }
+
+/*   private lastSearchTerm: string = '';
+ */
+  private checkForSearch() {
+    const currentSearchTerm = this.musicShopService.title();
+    
+    // Doar dacă termenul s-a schimbat
+    if (currentSearchTerm !== this.lastSearchTerm) {
+      this.lastSearchTerm = currentSearchTerm;
+      
+      if (currentSearchTerm && currentSearchTerm.trim() !== '') {
+        console.log('Table: Performing search for:', currentSearchTerm);
+        this.performSearch(currentSearchTerm);
+      } else {
+        // Dacă nu există termen de căutare, afișează toate tabelele
+        this.filteredTables = [...this.allTables];
+      }
+    }
+  }
+
+  private performSearch(searchTerm: string) {
+    console.log('=== TABLE SEARCH ===');
+    console.log('Search term:', searchTerm);
+
+    const term = searchTerm.toLowerCase();
+    
+    // Filtrează tabelele care conțin termenul de căutare în diverse câmpuri
+    this.filteredTables = this.allTables.filter(table => 
+      table.albumName.toLowerCase().includes(term) ||
+      table.controlNumber.toLowerCase().includes(term) ||
+      table.productType.toLowerCase().includes(term)
+    );
+
+    console.log('Filtered tables count:', this.filteredTables.length);
+    console.log('=== END TABLE SEARCH ===');
+  }
+
+  // Folosește direct filteredTables în template
+
+  // Getter pentru titlul secțiunii
+  get sectionTitle(): string {
+    const searchTerm = this.musicShopService.title();
+    if (searchTerm && searchTerm.trim() !== '') {
+      return `Inventory Search: "${searchTerm}"`;
+    }
+    return 'Product Inventory Management';
+  }
+
+  // Getter pentru informații despre căutare
+  get searchInfo(): string {
+    const searchTerm = this.musicShopService.title();
+    if (searchTerm && searchTerm.trim() !== '') {
+      return `Found ${this.filteredTables.length} product(s) matching your search`;
+    }
+    return '';
+  }
+
+  // Metodă pentru a curăța căutarea
+  clearSearch() {
+    this.musicShopService.clearSearch();
+    this.filteredTables = [...this.allTables];
   }
 
   openAddModal(): void {
@@ -112,25 +194,28 @@ throw new Error('Method not implemented.');
     try {
       if (this.isEditMode && this.editingTableId !== null) {
         // Edit existing table
-        const tableIndex = this.tables.findIndex(t => t.id === this.editingTableId);
+        const tableIndex = this.allTables.findIndex(t => t.id === this.editingTableId);
         if (tableIndex !== -1) {
-          this.tables = [
-            ...this.tables.slice(0, tableIndex),
+          this.allTables = [
+            ...this.allTables.slice(0, tableIndex),
             { ...formData, id: this.editingTableId },
-            ...this.tables.slice(tableIndex + 1)
+            ...this.allTables.slice(tableIndex + 1)
           ];
           this.message.success('Table updated successfully');
         }
       } else {
         // Add new table
-        const maxId = this.tables.length > 0 ? Math.max(...this.tables.map(t => t.id)) : 0;
+        const maxId = this.allTables.length > 0 ? Math.max(...this.allTables.map(t => t.id)) : 0;
         const newTable = { ...formData, id: maxId + 1 };
-        this.tables = [...this.tables, newTable];
+        this.allTables = [...this.allTables, newTable];
         this.message.success('Table added successfully');
       }
 
       // Save to localStorage
-      this.tableService.saveTables(this.tables);
+      this.tableService.saveTables(this.allTables);
+
+      // Reapply search filter if active
+      this.checkForSearch();
 
       // Close modal and reset form
       this.isModalVisible = false;
@@ -154,14 +239,19 @@ throw new Error('Method not implemented.');
   }
 
   deleteTable(table: Table): void {
-    this.tables = this.tables.filter(t => t.id !== table.id);
-    this.tableService.saveTables(this.tables);
+    this.allTables = this.allTables.filter(t => t.id !== table.id);
+    this.tableService.saveTables(this.allTables);
+    
+    // Reapply search filter if active
+    this.checkForSearch();
+    
     this.message.success('Table deleted successfully');
   }
 
   resetToOriginalData(): void {
     this.tableService.resetToInitial().subscribe(data => {
-      this.tables = data;
+      this.allTables = data;
+      this.checkForSearch(); // Reapply search after reset
       this.message.success('Data has been reset to original values');
     });
   }
@@ -230,5 +320,4 @@ throw new Error('Method not implemented.');
 
   trackByTableId(index: number, table: Table): number {
     return table.id;
-  }
-}
+  }}

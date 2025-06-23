@@ -1,14 +1,38 @@
-<!-- ADAUGĂ NAVBAR-UL LA ÎNCEPUT -->
+<!-- NAVBAR -->
 <app-navbar></app-navbar>
 
 <div class="shop-container">
     <div class="shop-header">
-        <h1 class="shop-title">Our Complete Collection</h1>
-        <p class="shop-subtitle">Browse all our vinyls and CDs in alphabetical order</p>
+        <h1 class="shop-title">{{ sectionTitle }}</h1>
+        <p class="shop-subtitle">{{ sectionSubtitle }}</p>
+        
+        <!-- Buton pentru a curăța căutarea dacă există rezultate de căutare -->
+        @if (musicShopService.title() && musicShopService.title().trim() !== '') {
+            <div class="search-controls">
+                <button nz-button nzType="default" (click)="clearSearch()">
+                    <span nz-icon nzType="close"></span>
+                    Clear Search
+                </button>
+            </div>
+        }
     </div>
     
+    <!-- Mesaj când nu sunt rezultate -->
+    @if (filteredProducts.length === 0 && musicShopService.title() && musicShopService.title().trim() !== '') {
+        <div class="no-results-section">
+            <div class="no-results-content">
+                <h3>No products found</h3>
+                <p>No products match your search for "<strong>{{ musicShopService.title() }}</strong>"</p>
+                <button nz-button nzType="primary" (click)="clearSearch()">
+                    Show All Products
+                </button>
+            </div>
+        </div>
+    }
+    
+    <!-- Grid de produse - afișează doar produsele filtrate -->
     <div class="products-grid">
-        @for (product of sortedProducts; track product.id) {
+        @for (product of filteredProducts; track product.id) {
             <div class="product-item">
                 @if (product.type === 'vinyl') {
                     <app-vinyl [vinylCard]="getVinylData(product.data)" (selectedVinylName)="onProductSelect($event)"></app-vinyl>
