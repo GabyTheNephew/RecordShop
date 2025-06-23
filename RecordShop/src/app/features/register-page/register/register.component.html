@@ -7,8 +7,20 @@
         <form nz-form [formGroup]="validateForm" class="register-form" (ngSubmit)="submitForm()">
             <nz-form-item>
                 <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
-                <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
+                <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="emailErrorTpl"
+                    [nzValidatingTip]="'Checking email availability...'">
                     <input nz-input formControlName="email" id="email" type="email" [disabled]="isLoading" />
+                    <ng-template #emailErrorTpl let-control>
+                        @if (control.errors?.['required']) {
+                        Please input your email!
+                        }
+                        @if (control.errors?.['email']) {
+                        The input is not valid E-mail!
+                        }
+                        @if (control.errors?.['emailExists']) {
+                        {{ control.errors['emailExists'].message }}
+                        }
+                    </ng-template>
                 </nz-form-control>
             </nz-form-item>
 
@@ -28,8 +40,22 @@
 
             <nz-form-item>
                 <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>Password</nz-form-label>
-                <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Password must be at least 6 characters!">
+                <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="passwordErrorTpl">
                     <input nz-input type="password" id="password" formControlName="password" [disabled]="isLoading" />
+                    @if (validateForm.get('password')?.value && passwordStrength) {
+                    <div class="password-strength">
+                        <span class="strength-label">Password strength: </span>
+                        <span [class]="'strength-' + passwordStrength">{{ passwordStrength }}</span>
+                    </div>
+                    }
+                    <ng-template #passwordErrorTpl let-control>
+                        @if (control.errors?.['required']) {
+                        Please input your password!
+                        }
+                        @if (control.errors?.['passwordStrength']) {
+                        {{ control.errors['passwordStrength'].message }}
+                        }
+                    </ng-template>
                 </nz-form-control>
             </nz-form-item>
 

@@ -72,6 +72,34 @@
     text-decoration: underline;
 }
 
+/* Password strength indicator */
+.password-strength {
+    margin-top: 8px;
+    font-size: 12px;
+}
+
+.strength-label {
+    color: #666;
+}
+
+.strength-weak {
+    color: #ff4d4f;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.strength-medium {
+    color: #fa8c16;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.strength-strong {
+    color: #52c41a;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     .register-card {
@@ -115,11 +143,23 @@ nz-form-item {
     margin-bottom: 20px;
 }
 
-/* Asigură spațiere corectă între label și input */
-.ant-form-item-label {
-    padding-bottom: 8px;
+/* Email validation states */
+.ant-form-item-has-success .ant-input {
+    border-color: #52c41a;
 }
 
-.ant-form-item-control {
-    min-height: auto;
+.ant-form-item-has-error .ant-input {
+    border-color: #ff4d4f;
+}
+
+.ant-form-item-validating .ant-input {
+    border-color: #1890ff;
+}
+
+.email-validation-icon {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #52c41a;
 }

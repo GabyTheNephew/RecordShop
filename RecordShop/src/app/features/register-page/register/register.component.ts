@@ -18,6 +18,9 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../core/services/auth.service';
+import { DatabaseService } from '../../../core/services/db.service';
+import { passwordValidator } from '../../../core/validators/password.validator';
+import { EmailAsyncValidator } from '../../../core/validators/email-async.validator';
 
 @Component({
   selector: 'app-register',
@@ -39,19 +42,42 @@ export class RegisterComponent implements OnInit, OnDestroy {
   private fb = inject(NonNullableFormBuilder);
   private router = inject(Router);
   private authService = inject(AuthService);
+  private dbService = inject(DatabaseService);
   private message = inject(NzMessageService);
   private destroy$ = new Subject<void>();
 
   isLoading = false;
 
   validateForm = this.fb.group({
-    email: this.fb.control('', [Validators.email, Validators.required]),
-    password: this.fb.control('', [Validators.required, Validators.minLength(6)]),
+    email: this.fb.control('',
+      [Validators.email, Validators.required],
+      [EmailAsyncValidator.goodEmail(this.dbService)]
+    ),
+    password: this.fb.control('', [Validators.required, passwordValidator()]),
     checkPassword: this.fb.control('', [Validators.required]),
     firstName: this.fb.control('', [Validators.required]),
     lastName: this.fb.control('', [Validators.required]),
     agree: this.fb.control(false)
   });
+
+  // Pentru indicatorul de complexitate parolă
+  get passwordStrength(): string {
+    const password = this.validateForm.get('password')?.value || '';
+    const checks = [
+      password.length >= 6,
+      /[A-Z]/.test(password),
+      /[a-z]/.test(password),
+      /[0-9]/.test(password),
+      /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)
+    ];
+
+    const score = checks.filter(Boolean).length;
+
+    if (score === 0) return '';
+    if (score <= 2) return 'weak';
+    if (score <= 4) return 'medium';
+    return 'strong';
+  }
 
   ngOnInit(): void {
     this.validateForm.controls.checkPassword.addValidators([this.confirmationValidator.bind(this)]);
@@ -80,7 +106,23 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
       } catch (error: any) {
         console.error('Registration error:', error);
-        this.message.error(error.message || 'Registration failed. Please try again.');
+
+        // Personalizează mesajul în funcție de tipul erorii
+        let errorMessage = 'Registration failed. Please try again.';
+
+        if (error.message.toLowerCase().includes('already') ||
+          error.message.toLowerCase().includes('exists') ||
+          error.message.toLowerCase().includes('registered')) {
+          errorMessage = 'An account with this email already exists. Please try logging in instead.';
+        } else if (error.message.toLowerCase().includes('invalid email')) {
+          errorMessage = 'Please enter a valid email address.';
+        } else if (error.message.toLowerCase().includes('password')) {
+          errorMessage = 'Password does not meet security requirements.';
+        } else if (error.message) {
+          errorMessage = error.message;
+        }
+
+        this.message.error(errorMessage);
       } finally {
         this.isLoading = false;
       }
