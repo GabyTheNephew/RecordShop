@@ -1,0 +1,150 @@
+<div class="shop-container">
+    <div class="shop-header">
+        <h1 class="shop-title">Our Complete Collection</h1>
+        <p class="shop-subtitle">Browse all our vinyls and CDs in alphabetical order</p>
+    </div>
+    
+    <div class="products-grid">
+        @for (product of sortedProducts; track product.id) {
+            <div class="product-item">
+                @if (product.type === 'vinyl') {
+                    <app-vinyl [vinylCard]="getVinylData(product.data)" (selectedVinylName)="onProductSelect($event)"></app-vinyl>
+                } @else if (product.type === 'cd') {
+                    <app-cd [cdCard]="getCdData(product.data)" (selectedCdName)="onProductSelect($event)"></app-cd>
+                }
+            </div>
+        }
+    </div>
+    
+    <div class="shop-footer-buttons">
+        <button nz-button nzType="default" nzSize="large" class="footer-btn cart-btn" (click)="showCart()">
+            Show Cart
+        </button>
+        <button nz-button nzType="primary" nzSize="large" class="footer-btn home-btn" (click)="goToHomePage()">
+            Home Page
+        </button>
+    </div>
+</div>
+
+<!-- Modal pentru afișarea coșului -->
+<nz-modal 
+    [(nzVisible)]="isCartVisible" 
+    nzTitle="Your Shopping Cart" 
+    [nzFooter]="null"
+    nzWidth="700px"
+    (nzOnCancel)="continueShopping()">
+    
+    <ng-container *nzModalContent>
+        <div class="cart-content">
+            @if (cartItems.length === 0) {
+                <div class="empty-cart">
+                    <p>Your cart is empty!</p>
+                </div>
+            } @else {
+                <nz-table 
+                    #cartTable 
+                    [nzData]="cartItems" 
+                    [nzShowPagination]="false"
+                    nzSize="small">
+                    <thead>
+                        <tr>
+                            <th>Album</th>
+                            <th>Type</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (item of cartItems; track item.id) {
+                            <tr>
+                                <td>{{ item.name }}</td>
+                                <td>
+                                    <span class="product-type" [class]="item.type">
+                                        {{ item.type | uppercase }}
+                                    </span>
+                                </td>
+                                <td>${{ item.price.toFixed(2) }}</td>
+                                <td>
+                                    <nz-input-number 
+                                        [(ngModel)]="item.quantity"
+                                        [nzMin]="1"
+                                        [nzMax]="99"
+                                        (ngModelChange)="updateQuantity(item, $event)">
+                                    </nz-input-number>
+                                </td>
+                                <td class="item-total">${{ (item.price * item.quantity).toFixed(2) }}</td>
+                                <td>
+                                    <button 
+                                        nz-button 
+                                        nzType="text" 
+                                        nzDanger 
+                                        (click)="removeItem(item.id)">
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </nz-table>
+                
+                <div class="cart-summary">
+                    <div class="total-price">
+                        <strong>Total: ${{ totalPrice.toFixed(2) }}</strong>
+                    </div>
+                </div>
+            }
+            
+            <div class="cart-actions">
+                <button 
+                    nz-button 
+                    nzType="default" 
+                    (click)="continueShopping()">
+                    Continue Shopping
+                </button>
+                <button 
+                    nz-button 
+                    nzType="default" 
+                    nzDanger 
+                    (click)="cancelOrder()">
+                    Cancel Order
+                </button>
+                <button 
+                    nz-button 
+                    nzType="primary" 
+                    [disabled]="cartItems.length === 0"
+                    (click)="placeOrder()">
+                    Place Order
+                </button>
+            </div>
+        </div>
+    </ng-container>
+</nz-modal>
+
+<!-- Modal pentru mesajul de mulțumire -->
+<nz-modal 
+    [(nzVisible)]="isThankYouVisible" 
+    nzTitle="Order Confirmation" 
+    [nzFooter]="null"
+    nzWidth="500px"
+    (nzOnCancel)="closeThankYou()">
+    
+    <ng-container *nzModalContent>
+        <div class="thank-you-content">
+            <div class="success-icon">✅</div>
+            <h3>Thank You for Your Order!</h3>
+            <p>Your order has been successfully placed and will be processed shortly.</p>
+            <p>You will receive a confirmation email with tracking information once your items are shipped.</p>
+            <p>We appreciate your business and hope you enjoy your new music!</p>
+            
+            <button 
+                nz-button 
+                nzType="primary" 
+                nzSize="large"
+                (click)="closeThankYou()">
+                Continue Shopping
+            </button>
+        </div>
+    </ng-container>
+</nz-modal>
