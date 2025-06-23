@@ -25,12 +25,18 @@ export const routes: Routes = [
             .then(m => m.HomePageComponent),
         canActivate: [authGuard] // Protejează ruta - necesită autentificare
     },
-    // {
-    //     path: 'shop',
-    //     loadComponent: () => import('./features/landing-page/shop/shop.component')
-    //         .then(m => m.ShopComponent),
-    //     canActivate: [authGuard] // Protejează ruta - necesită autentificare
-    // },
+    {
+        path: 'shop',
+        loadComponent: () => import('./features/shop-page/shop.component')
+            .then(m => m.ShopComponent),
+        canActivate: [authGuard] // Protejează ruta - necesită autentificare
+    },
+    {
+        path: 'inventory',
+        loadComponent: () => import('./features/table-page/table/table.component')
+            .then(m => m.TableComponent),
+        canActivate: [authGuard]
+    },
     {
         path: '**',
         redirectTo: '/login'
