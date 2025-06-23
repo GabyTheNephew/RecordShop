@@ -1,0 +1,218 @@
+<div class="table-container">
+  <div class="table-header">
+    <h2>Product Inventory Management</h2>
+    <div class="header-actions">
+      <button nz-button nzType="primary" (click)="openAddModal()">
+        <span nz-icon nzType="plus"></span>
+        Add Product
+      </button>
+      <button nz-button nzType="default" (click)="resetToOriginalData()" style="margin-left: 8px;">
+        <span nz-icon nzType="reload"></span>
+        Reset Data
+      </button>
+    </div>
+  </div>
+
+  <nz-table 
+    #tableTable 
+    [nzData]="tables" 
+    [nzPageSize]="pageSize" 
+    [nzFrontPagination]="true"
+    [nzShowPagination]="true"
+    nzTableLayout="fixed"
+    [nzScroll]="{ x: '1200px' }">
+    <thead>
+      <tr>
+        <th nzWidth="100px">Image</th>
+        <th nzWidth="120px">Control Number</th>
+        <th nzWidth="200px">Album Name</th>
+        <th nzWidth="100px">Price</th>
+        <th nzWidth="120px">Product Type</th>
+        <th nzWidth="120px">Stock Quantity</th>
+        <th nzWidth="120px">Sold Quantity</th>
+        <th nzWidth="120px">Stock Status</th>
+        <th nzWidth="120px">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (table of tableTable.data; track trackByTableId($index, table)) {
+        <tr>
+          <td>
+            @if (table.image) {
+              <img [src]="table.image" [alt]="table.albumName" class="table-image">
+            } @else {
+              <div class="no-image">No Image</div>
+            }
+          </td>
+          <td>
+            <span class="control-number">{{ table.controlNumber }}</span>
+          </td>
+          <td>
+            <span class="album-name" [title]="table.albumName">{{ table.albumName }}</span>
+          </td>
+          <td>
+            <span class="price">${{ table.price | number:'1.2-2' }}</span>
+          </td>
+          <td>
+            <nz-tag [nzColor]="table.productType === 'CD' ? 'blue' : 'purple'">
+              {{ table.productType }}
+            </nz-tag>
+          </td>
+          <td>
+            <span class="quantity">{{ table.stockQuantity }}</span>
+          </td>
+          <td>
+            <span class="quantity">{{ table.soldQuantity }}</span>
+          </td>
+          <td>
+            <nz-tag [nzColor]="getStockStatus(table).color">
+              {{ getStockStatus(table).text }}
+            </nz-tag>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <button nz-button nzType="link" nzSize="small" (click)="openEditModal(table)" nz-tooltip="Edit">
+                <span nz-icon nzType="edit" nzTheme="outline"></span>
+              </button>
+              <button 
+                nz-button 
+                nzType="link" 
+                nzDanger 
+                nzSize="small" 
+                (click)="deleteTable(table)" 
+                nz-tooltip="Delete">
+                <span nz-icon nzType="delete" nzTheme="outline"></span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </nz-table>
+</div>
+
+<!-- Modal for Add/Edit Table -->
+<nz-modal 
+  [(nzVisible)]="isModalVisible" 
+  [nzTitle]="getModalTitle()" 
+  (nzOnOk)="handleOk()"
+  (nzOnCancel)="handleCancel()" 
+  [nzOkLoading]="isLoading" 
+  [nzOkText]="getOkButtonText()"
+  [nzWidth]="600">
+  <div *nzModalContent>
+    <nz-form [formGroup]="tableForm" nzLayout="horizontal">
+      
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="controlNumber" nzRequired>Control Number</nz-form-label>
+        <nz-form-control 
+          [nzSpan]="18" 
+          [nzValidateStatus]="hasError('controlNumber') ? 'error' : ''"
+          [nzErrorTip]="getErrorMessage('controlNumber')">
+          <input 
+            nz-input 
+            id="controlNumber" 
+            formControlName="controlNumber"
+            placeholder="CD001 or VNL001" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="albumName" nzRequired>Album Name</nz-form-label>
+        <nz-form-control 
+          [nzSpan]="18" 
+          [nzValidateStatus]="hasError('albumName') ? 'error' : ''"
+          [nzErrorTip]="getErrorMessage('albumName')">
+          <input 
+            nz-input 
+            id="albumName" 
+            formControlName="albumName" 
+            placeholder="Enter album name" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="price" nzRequired>Price</nz-form-label>
+        <nz-form-control 
+          [nzSpan]="18" 
+          [nzValidateStatus]="hasError('price') ? 'error' : ''"
+          [nzErrorTip]="getErrorMessage('price')">
+          <nz-input-number
+            id="price"
+            formControlName="price"
+            [nzMin]="0.01"
+            [nzMax]="9999.99"
+            [nzStep]="0.01"
+            nzPlaceHolder="0.00"
+            style="width: 100%">
+          </nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="productType" nzRequired>Product Type</nz-form-label>
+        <nz-form-control 
+          [nzSpan]="18" 
+          [nzValidateStatus]="hasError('productType') ? 'error' : ''"
+          [nzErrorTip]="getErrorMessage('productType')">
+          <nz-select 
+            id="productType" 
+            formControlName="productType" 
+            nzPlaceHolder="Select product type">
+            <nz-option nzValue="CD" nzLabel="CD"></nz-option>
+            <nz-option nzValue="Vinyl" nzLabel="Vinyl"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="stockQuantity" nzRequired>Stock Quantity</nz-form-label>
+        <nz-form-control 
+          [nzSpan]="18" 
+          [nzValidateStatus]="hasError('stockQuantity') ? 'error' : ''"
+          [nzErrorTip]="getErrorMessage('stockQuantity')">
+          <nz-input-number
+            id="stockQuantity"
+            formControlName="stockQuantity"
+            [nzMin]="0"
+            [nzMax]="9999"
+            nzPlaceHolder="0"
+            style="width: 100%">
+          </nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="soldQuantity" nzRequired>Sold Quantity</nz-form-label>
+        <nz-form-control 
+          [nzSpan]="18" 
+          [nzValidateStatus]="hasError('soldQuantity') ? 'error' : ''"
+          [nzErrorTip]="getErrorMessage('soldQuantity')">
+          <nz-input-number
+            id="soldQuantity"
+            formControlName="soldQuantity"
+            [nzMin]="0"
+            [nzMax]="9999"
+            nzPlaceHolder="0"
+            style="width: 100%">
+          </nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="6" nzFor="image">Image URL</nz-form-label>
+        <nz-form-control 
+          [nzSpan]="18" 
+          [nzValidateStatus]="hasError('image') ? 'error' : ''"
+          [nzErrorTip]="getErrorMessage('image')">
+          <input 
+            nz-input 
+            id="image" 
+            formControlName="image" 
+            placeholder="https://example.com/image.jpg" />
+        </nz-form-control>
+      </nz-form-item>
+
+    </nz-form>
+  </div>
+</nz-modal>

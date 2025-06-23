@@ -28,6 +28,11 @@ export const routes: Routes = [
            .then(m => m.ShopComponent),
    },
    {
+       path: 'inventory',  
+       loadComponent: () => import('./features/table-page/table/table.component')
+           .then(m => m.TableComponent),
+   },
+   {
        path: '**',
        redirectTo: '/login'
    }
