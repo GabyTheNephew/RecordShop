@@ -19,7 +19,6 @@ import { CartService, CartItem } from '../../core/services/cart.service';
 import { VinylContainer } from '../../core/interfaces/vinyl.interface';
 import { CdContainer } from '../../core/interfaces/cd.interface';
 
-// Interface simplă pentru produsele unificate
 interface ProductItem {
   id: string;
   text: string;
@@ -49,7 +48,6 @@ export class ShopComponent implements OnInit, OnDestroy {
   filteredProducts: ProductItem[] = [];
   searchSubscription?: Subscription;
   
-  // Modal state
   isCartVisible = false;
   isThankYouVisible = false;
   cartItems: CartItem[] = [];
@@ -77,7 +75,6 @@ export class ShopComponent implements OnInit, OnDestroy {
   private lastSearchTerm: string = '';
 
   private loadAllProducts() {
-    // Obține toate vinilurile
     const vinyls = this.vinylService.smallVinylList || [];
     const vinylProducts: ProductItem[] = vinyls.map((vinyl, index) => ({
       id: `vinyl-${index}`,
@@ -86,7 +83,6 @@ export class ShopComponent implements OnInit, OnDestroy {
       data: vinyl
     }));
 
-    // Obține toate CD-urile
     const cds = this.cdService.smallCdList || [];
     const cdProducts: ProductItem[] = cds.map((cd, index) => ({
       id: `cd-${index}`,
@@ -94,68 +90,49 @@ export class ShopComponent implements OnInit, OnDestroy {
       type: 'cd',
       data: cd
     }));
-
-    // Combină toate produsele
+    //combin produsele
     this.allProducts = [...vinylProducts, ...cdProducts];
 
-    // Sortează alfabetic după nume (text)
     this.allProducts = this.allProducts.sort((a, b) => 
       a.text.toLowerCase().localeCompare(b.text.toLowerCase())
     );
 
-    // Inițial afișează toate produsele
     this.filteredProducts = [...this.allProducts];
   }
 
   private setupSearchSubscription() {
-    // Urmărește schimbările în titlul de căutare folosind signal effect
     setInterval(() => {
       this.checkForSearch();
-    }, 100); // Verifică la fiecare 100ms
+    }, 100); 
 
-    // Verifică dacă există deja un termen de căutare
     this.checkForSearch();
   }
 
   private checkForSearch() {
     const currentSearchTerm = this.musicShopService.title();
     
-    // Doar dacă termenul s-a schimbat
     if (currentSearchTerm !== this.lastSearchTerm) {
       this.lastSearchTerm = currentSearchTerm;
       
       if (currentSearchTerm && currentSearchTerm.trim() !== '') {
-        console.log('Shop: Performing search for:', currentSearchTerm);
         this.performSearch(currentSearchTerm);
       } else {
-        // Dacă nu există termen de căutare, afișează toate produsele
         this.filteredProducts = [...this.allProducts];
       }
     }
   }
 
-  /* private lastSearchTerm: string = '';
- */
   private performSearch(searchTerm: string) {
     console.log('=== SHOP SEARCH ===');
     console.log('Search term:', searchTerm);
 
-    // Filtrează produsele care conțin termenul de căutare
     this.filteredProducts = this.allProducts.filter(product => 
       product.text.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    console.log('Filtered products count:', this.filteredProducts.length);
-    console.log('=== END SHOP SEARCH ===');
-
-    // Scroll la top pentru a vedea rezultatele
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Getter pentru produsele care trebuie afișate (elimină sortedProducts)
-  // folosește direct filteredProducts în template
-
-  // Getter pentru titlul secțiunii
   get sectionTitle(): string {
     const searchTerm = this.musicShopService.title();
     if (searchTerm && searchTerm.trim() !== '') {
@@ -164,7 +141,6 @@ export class ShopComponent implements OnInit, OnDestroy {
     return 'Our Complete Collection';
   }
 
-  // Getter pentru subtitlu
   get sectionSubtitle(): string {
     const searchTerm = this.musicShopService.title();
     if (searchTerm && searchTerm.trim() !== '') {
@@ -174,17 +150,14 @@ export class ShopComponent implements OnInit, OnDestroy {
   }
 
   onProductSelect(productName: string) {
-    // Setează produsul selectat în service
     this.musicShopService.setTitle(productName);
   }
 
-  // Metodă pentru a curăța căutarea
   clearSearch() {
     this.musicShopService.clearSearch();
     this.filteredProducts = [...this.allProducts];
   }
 
-  // Helper methods pentru type casting
   getVinylData(data: VinylContainer | CdContainer): VinylContainer {
     return data as VinylContainer;
   }
@@ -194,41 +167,34 @@ export class ShopComponent implements OnInit, OnDestroy {
   }
 
   showCart() {
-    // Obține produsele din coș
     this.cartItems = this.cartService.getCartItems();
     this.totalPrice = this.cartService.getTotalPrice();
     
     if (this.cartItems.length === 0) {
-      // Dacă coșul e gol, afișează mesaj
       alert('Your cart is empty! Please add some products first.');
       return;
     }
     
-    // Afișează modal-ul cu coșul
     this.isCartVisible = true;
   }
 
   updateQuantity(item: CartItem, newQuantity: number) {
     this.cartService.updateQuantity(item.id, newQuantity);
-    // Actualizează lista locală
     this.cartItems = this.cartService.getCartItems();
     this.totalPrice = this.cartService.getTotalPrice();
   }
 
   removeItem(itemId: string) {
     this.cartService.removeFromCart(itemId);
-    // Actualizează lista locală
     this.cartItems = this.cartService.getCartItems();
     this.totalPrice = this.cartService.getTotalPrice();
   }
 
   continueShopping() {
-    // Închide modal-ul dar păstrează conținutul coșului
     this.isCartVisible = false;
   }
 
   cancelOrder() {
-    // Anulează comanda - golește coșul și închide modal-ul
     this.cartService.clearCart();
     this.cartItems = [];
     this.totalPrice = 0;
@@ -236,11 +202,9 @@ export class ShopComponent implements OnInit, OnDestroy {
   }
 
   placeOrder() {
-    // Plasează comanda - afișează mesajul de mulțumire
     this.isCartVisible = false;
     this.isThankYouVisible = true;
     
-    // Golește coșul după comandă
     this.cartService.clearCart();
     this.cartItems = [];
     this.totalPrice = 0;
@@ -251,12 +215,9 @@ export class ShopComponent implements OnInit, OnDestroy {
   }
 
   goToHomePage() {
-    // Curăță căutarea înainte de navigare
     this.clearSearch();
     
-    // Navighează înapoi la pagina principală
     this.router.navigate(['/home']).then(() => {
-      // Scroll la începutul paginii
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }

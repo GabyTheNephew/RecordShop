@@ -1,4 +1,3 @@
-/* Header - CSS simplu fără framework */
 .header-container {
   display: flex;
   flex-direction: column;
@@ -169,7 +168,6 @@
   margin: 0 auto;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
 
   .header-title,

@@ -1,4 +1,3 @@
-<!-- NAVBAR -->
 <app-navbar></app-navbar>
 
 <div class="shop-container">
@@ -6,7 +5,6 @@
         <h1 class="shop-title">{{ sectionTitle }}</h1>
         <p class="shop-subtitle">{{ sectionSubtitle }}</p>
         
-        <!-- Buton pentru a curăța căutarea dacă există rezultate de căutare -->
         @if (musicShopService.title() && musicShopService.title().trim() !== '') {
             <div class="search-controls">
                 <button nz-button nzType="default" (click)="clearSearch()">
@@ -17,7 +15,6 @@
         }
     </div>
     
-    <!-- Mesaj când nu sunt rezultate -->
     @if (filteredProducts.length === 0 && musicShopService.title() && musicShopService.title().trim() !== '') {
         <div class="no-results-section">
             <div class="no-results-content">
@@ -29,8 +26,6 @@
             </div>
         </div>
     }
-    
-    <!-- Grid de produse - afișează doar produsele filtrate -->
     <div class="products-grid">
         @for (product of filteredProducts; track product.id) {
             <div class="product-item">
@@ -53,7 +48,7 @@
     </div>
 </div>
 
-<!-- Modal pentru afișarea coșului -->
+<!-- Modal afis cos-->
 <nz-modal 
     [(nzVisible)]="isCartVisible" 
     nzTitle="Your Shopping Cart" 
@@ -149,7 +144,7 @@
     </ng-container>
 </nz-modal>
 
-<!-- Modal pentru mesajul de mulțumire -->
+<!-- Modal mesaj ms -->
 <nz-modal 
     [(nzVisible)]="isThankYouVisible" 
     nzTitle="Order Confirmation" 

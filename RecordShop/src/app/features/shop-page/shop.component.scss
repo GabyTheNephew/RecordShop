@@ -1,10 +1,9 @@
-/* Shop - CSS simplu fără framework */
+
 .shop-container {
   width: 100%;
   min-height: 100vh;
   padding: 2rem;
   padding-top: 80px;
-  /* SPAȚIU PENTRU NAVBAR FIX */
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
@@ -27,7 +26,6 @@
   margin: 0 0 1rem 0;
 }
 
-/* Stiluri pentru controalele de căutare */
 .search-controls {
   margin-top: 1rem;
   display: flex;
@@ -49,7 +47,6 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Stiluri pentru secțiunea "No Results" */
 .no-results-section {
   display: flex;
   justify-content: center;
@@ -103,7 +100,6 @@
 .products-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  /* 4 produse pe linie */
   gap: 2rem;
   max-width: 1400px;
   margin: 0 auto 4rem auto;
@@ -120,7 +116,6 @@
   max-width: 300px;
 }
 
-/* Asigură dimensiuni uniforme pentru toate produsele */
 .product-item app-vinyl .card-container,
 .product-item app-cd .card-container {
   height: 400px !important;
@@ -137,7 +132,6 @@
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* Stiluri pentru efectul de sliding - identice pentru CD și vinil */
 .product-item app-vinyl .images-container,
 .product-item app-cd .images-container {
   position: relative !important;
@@ -165,7 +159,6 @@
   object-fit: cover !important;
 }
 
-/* Efecte la hover pentru sliding */
 .product-item app-vinyl .images-container:hover .image-container,
 .product-item app-cd .images-container:hover .image-container {
   transform: translateX(-15px) !important;
@@ -217,7 +210,6 @@
   transform: scale(1.05) !important;
 }
 
-/* Stiluri pentru modal-urile de coș */
 .cart-content .empty-cart {
   text-align: center;
   padding: 2rem;
@@ -297,7 +289,6 @@
   margin-top: 1rem;
 }
 
-/* Responsive pentru modal-uri */
 @media (max-width: 768px) {
   .cart-content .cart-actions {
     flex-direction: column;
@@ -311,7 +302,6 @@
 @media (max-width: 1200px) {
   .products-grid {
     grid-template-columns: repeat(3, 1fr);
-    /* 3 pe linie pe ecrane medii */
     gap: 1.5rem;
   }
 }
@@ -320,7 +310,6 @@
   .shop-container {
     padding: 1rem;
     padding-top: 70px;
-    /* AJUSTEAZĂ SPAȚIUL PE MOBILE */
   }
 
   .shop-header {
@@ -348,7 +337,6 @@
 
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
-    /* 2 pe linie pe tablet */
     gap: 1rem;
   }
 
@@ -391,7 +379,6 @@
 @media (max-width: 480px) {
   .products-grid {
     grid-template-columns: 1fr;
-    /* 1 pe linie pe mobile */
   }
 
   .shop-header .shop-title {

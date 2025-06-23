@@ -28,7 +28,6 @@
   width: 100%;
 }
 
-/* Stiluri pentru produsele de tip vinil */
 .search-results-container app-vinyl .card-container {
   display: inline-flex;
   flex-direction: column;
@@ -130,7 +129,6 @@
   justify-content: center;
 }
 
-/* Stiluri pentru produsele de tip CD */
 .search-results-container app-cd .card-container {
   display: inline-flex;
   flex-direction: column;
@@ -244,7 +242,6 @@
   font-style: italic;
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
   .search-results-section {
     padding: 2rem 1rem;

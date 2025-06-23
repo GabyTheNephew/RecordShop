@@ -2,7 +2,6 @@
     <div class="our-vinyls-title">Our Vinyls</div>
     
     <div class="vinyl-carousel-container">
-        <!-- Buton navigare stânga -->
         <button 
             class="carousel-nav-btn carousel-nav-prev" 
             (click)="goToPrevious()"
@@ -13,7 +12,6 @@
             </svg>
         </button>
 
-        <!-- Container pentru vinilurile vizibile -->
         <div class="vinyl-list-container">
             <div class="vinyl-slider" 
                  [style.transform]="'translateX(-' + (currentIndex * (100 / itemsPerView)) + '%)'">
@@ -25,7 +23,6 @@
             </div>
         </div>
 
-        <!-- Buton navigare dreapta -->
         <button 
             class="carousel-nav-btn carousel-nav-next" 
             (click)="goToNext()"
@@ -37,7 +34,6 @@
         </button>
     </div>
 
-    <!-- Indicatori de navigație (puncte) -->
     <div class="carousel-indicators" *ngIf="totalSlides > 1">
         @for (indicator of slideIndicators; track indicator) {
             <button 

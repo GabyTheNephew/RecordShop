@@ -34,42 +34,24 @@ export class HomePageComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef
   ) {}
 
-  ngOnInit() {
-    console.log('HomePageComponent initialized');
-  }
+  ngOnInit() {}
 
-  ngOnDestroy() {
-    console.log('HomePageComponent destroyed');
-  }
+  ngOnDestroy() {}
 
   get searchResults(): SearchResult[] {
     const title = this.search.title();
-    
-    console.log('=== HOME PAGE: Getting search results ===');
-    console.log('Current title:', `"${title}"`);
-    
-    // Dacă nu există termen de căutare, returnează array gol
     if (!title || title.trim() === '') {
-      console.log('No search title, returning empty results');
       return [];
     }
     
-    // Încearcă să obții rezultatele din serviciu
     const storedResults = this.search.getSearchResults();
-    console.log('Stored results count:', storedResults.length);
     
-    // Dacă există rezultate stocate, le returnează
     if (storedResults.length > 0) {
-      console.log('Returning stored results:', storedResults.length);
       return storedResults;
     }
     
-    // Fallback: efectuează o căutare nouă
-    console.log('No stored results, performing new search for:', title);
     const freshResults = this.search.searchAllProducts(title.trim());
-    console.log('Fresh search results:', freshResults.length);
     
-    // Stochează rezultatele pentru utilizare ulterioară
     if (freshResults.length > 0) {
       this.search.setSearchResults(freshResults);
     }
@@ -80,20 +62,14 @@ export class HomePageComponent implements OnInit, OnDestroy {
   get hasSearchTerm(): boolean {
     const title = this.search.title();
     const hasSearch = !!(title && title.trim() !== '');
-    
-    console.log('=== HOME PAGE: Checking if has search term ===');
-    console.log('Title:', `"${title}"`);
-    console.log('Has search term:', hasSearch);
-    
+
     if (hasSearch) {
       const results = this.searchResults;
-      console.log('Search results count:', results.length);
     }
     
     return hasSearch;
   }
 
-  // Helper methods pentru type casting
   getVinylData(result: SearchResult): VinylContainer {
     const discImage = result.discImage || 'vinyl-image.png';
     return {
@@ -115,15 +91,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   onProductSelect(productName: string) {
-    console.log('Product selected:', productName);
     this.search.setTitle(productName);
   }
 
-  // Metodă pentru debug manual
-  debugCurrentState() {
-    console.log('=== HOME PAGE DEBUG ===');
-    console.log('Title:', this.search.title());
-    console.log('Has search term:', this.hasSearchTerm);
-    console.log('Search results:', this.searchResults);
-  }
 }

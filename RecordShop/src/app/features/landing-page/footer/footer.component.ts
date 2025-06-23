@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router'; // <- Asigură-te că e importat
+import { Router } from '@angular/router'; 
 import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
@@ -10,7 +10,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
-  constructor(private router: Router) {} // <- Adaugă aceasta
+  constructor(private router: Router) {} 
 
   goToShop() {
     this.router.navigate(['/shop']);

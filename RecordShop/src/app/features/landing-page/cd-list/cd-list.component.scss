@@ -246,11 +246,9 @@
   background-color: #903d32 !important;
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
   .cd-slide {
     flex: 0 0 50%;
-    /* 2 items per view pe tablet */
   }
 
   .carousel-nav-btn {
@@ -295,7 +293,6 @@
 @media (max-width: 480px) {
   .cd-slide {
     flex: 0 0 100%;
-    /* 1 item per view pe mobile */
   }
 
   .cd-carousel-container {

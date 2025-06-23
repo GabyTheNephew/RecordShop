@@ -34,16 +34,6 @@ export class VinylComponent implements OnInit {
   }
 
   orderNowButton() {
-    // Adaugă vinilul în coș
     this.cartService.addToCart(this.vinylText, this.vinylPrice, 'vinyl');
-    
-    // Păstrează funcționalitatea existentă
-   // this.musicShopService.setTitle(this.vinylText);
-    
-    // Emit evenimentul pentru componenta părinte (dacă e necesar)
-    //this.selectedVinylName.emit(this.vinylText);
-    
-    // Feedback vizual (opțional)
-    console.log(`Added "${this.vinylText}" to cart`);
-  }
+ }
 }

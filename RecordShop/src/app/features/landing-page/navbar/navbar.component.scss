@@ -1,4 +1,3 @@
-/* Navbar - CSS simplu fără framework */
 .navbar {
   position: fixed;
   top: 0;
@@ -138,7 +137,6 @@
   text-transform: uppercase;
 }
 
-/* Responsive Design */
 @media (max-width: 991px) {
   .navbar-toggler {
     display: block;
