@@ -11,32 +11,49 @@ import { takeUntil } from 'rxjs/operators';
 
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { NzFormModule, NzFormTooltipIcon } from 'ng-zorro-antd/form';
+import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../core/services/auth.service';
+
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, NzButtonModule, NzCheckboxModule, NzFormModule, NzInputModule, NzSelectModule, RouterLink],
+  imports: [
+    ReactiveFormsModule,
+    NzButtonModule,
+    NzCheckboxModule,
+    NzFormModule,
+    NzInputModule,
+    NzSelectModule,
+    RouterLink,
+    CommonModule
+  ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit, OnDestroy {
   private fb = inject(NonNullableFormBuilder);
-  private router = inject(Router); // ← INJECT ROUTER
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  private message = inject(NzMessageService);
   private destroy$ = new Subject<void>();
+
+  isLoading = false;
 
   validateForm = this.fb.group({
     email: this.fb.control('', [Validators.email, Validators.required]),
-    password: this.fb.control('', [Validators.required]),
+    password: this.fb.control('', [Validators.required, Validators.minLength(6)]),
     checkPassword: this.fb.control('', [Validators.required]),
-    nickname: this.fb.control('', [Validators.required]),
+    firstName: this.fb.control('', [Validators.required]),
+    lastName: this.fb.control('', [Validators.required]),
     agree: this.fb.control(false)
   });
 
   ngOnInit(): void {
-    // Adaugă validator-ul după ce formularul este inițializat
     this.validateForm.controls.checkPassword.addValidators([this.confirmationValidator.bind(this)]);
 
     this.validateForm.controls.password.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
@@ -49,14 +66,24 @@ export class RegisterComponent {
     this.destroy$.complete();
   }
 
-  submitForm(): void {
+  async submitForm(): Promise<void> {
     if (this.validateForm.valid) {
-      console.log('submit', this.validateForm.value);
+      this.isLoading = true;
 
-      // Simulează procesul de înregistrare (aici ai pune logica de register)
-      // După succes, redirect la home:
-      this.router.navigate(['/home']);
+      try {
+        const { email, password, firstName, lastName } = this.validateForm.value;
 
+        await this.authService.signUp(email!, password!, firstName!, lastName!);
+
+        this.message.success('Registration successful! Please check your email to verify your account.');
+        this.router.navigate(['/login']);
+
+      } catch (error: any) {
+        console.error('Registration error:', error);
+        this.message.error(error.message || 'Registration failed. Please try again.');
+      } finally {
+        this.isLoading = false;
+      }
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {

@@ -8,20 +8,36 @@
             <nz-form-item>
                 <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
                 <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
-                    <input nz-input formControlName="email" id="email" />
+                    <input nz-input formControlName="email" id="email" type="email" [disabled]="isLoading" />
                 </nz-form-control>
             </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="firstName">First Name</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your first name!">
+                    <input nz-input formControlName="firstName" id="firstName" [disabled]="isLoading" />
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="lastName">Last Name</nz-form-label>
+                <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your last name!">
+                    <input nz-input formControlName="lastName" id="lastName" [disabled]="isLoading" />
+                </nz-form-control>
+            </nz-form-item>
+
             <nz-form-item>
                 <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>Password</nz-form-label>
-                <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your password!">
-                    <input nz-input type="password" id="password" formControlName="password" />
+                <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Password must be at least 6 characters!">
+                    <input nz-input type="password" id="password" formControlName="password" [disabled]="isLoading" />
                 </nz-form-control>
             </nz-form-item>
+
             <nz-form-item>
                 <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkPassword" nzRequired>Confirm</nz-form-label>
                 <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTpl">
                     <input nz-input type="password" formControlName="checkPassword" id="checkPassword"
-                        placeholder="Confirm your password" />
+                        placeholder="Confirm your password" [disabled]="isLoading" />
                     <ng-template #errorTpl let-control>
                         @if (control.errors?.['required']) {
                         Please confirm your password!
@@ -32,20 +48,16 @@
                     </ng-template>
                 </nz-form-control>
             </nz-form-item>
-            <nz-form-item>
-                <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="nickname" nzRequired
-                    nzTooltipTitle="What do you want other to call you">
-                    <span>Nickname</span>
-                </nz-form-label>
-                <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your nickname!">
-                    <input nz-input id="nickname" formControlName="nickname" />
-                </nz-form-control>
-            </nz-form-item>
+
             <nz-form-item nz-row class="register-area">
                 <nz-form-control [nzSpan]="14" [nzOffset]="6">
-                    <button nz-button nzType="primary" class="register-button">Register</button>
+                    <button nz-button nzType="primary" class="register-button" [nzLoading]="isLoading"
+                        [disabled]="!validateForm.valid">
+                        {{ isLoading ? 'Creating account...' : 'Register' }}
+                    </button>
                 </nz-form-control>
             </nz-form-item>
+
             <div class="login-link">
                 Already have an account? <a routerLink="/login">Sign in</a>
             </div>

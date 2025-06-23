@@ -5,22 +5,24 @@
         </div>
         <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
             <nz-form-item>
-                <nz-form-control nzErrorTip="Please input your username!">
+                <nz-form-control nzErrorTip="Please input a valid email!">
                     <nz-input-group nzPrefixIcon="user">
-                        <input type="text" nz-input formControlName="username" placeholder="Username" />
+                        <input type="email" nz-input formControlName="username" placeholder="Email"
+                            [disabled]="isLoading" />
                     </nz-input-group>
                 </nz-form-control>
             </nz-form-item>
             <nz-form-item>
-                <nz-form-control nzErrorTip="Please input your Password!">
+                <nz-form-control nzErrorTip="Please input your password!">
                     <nz-input-group nzPrefixIcon="lock">
-                        <input type="password" nz-input formControlName="password" placeholder="Password" />
+                        <input type="password" nz-input formControlName="password" placeholder="Password"
+                            [disabled]="isLoading" />
                     </nz-input-group>
                 </nz-form-control>
             </nz-form-item>
             <div nz-row class="login-form-margin">
                 <div nz-col [nzSpan]="12">
-                    <label nz-checkbox formControlName="remember">
+                    <label nz-checkbox formControlName="remember" [nzDisabled]="isLoading">
                         <span>Remember me</span>
                     </label>
                 </div>
@@ -28,8 +30,10 @@
                     <a class="login-form-forgot">Forgot password</a>
                 </div>
             </div>
-            <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'" type="submit">Log
-                in</button>
+            <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'" type="submit"
+                [nzLoading]="isLoading" [disabled]="!validateForm.valid">
+                {{ isLoading ? 'Signing in...' : 'Log in' }}
+            </button>
             <div class="register-link">
                 Or <a routerLink="/register">register now!</a>
             </div>

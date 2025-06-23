@@ -7,6 +7,8 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import { AuthService } from '../../../core/services/auth.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-login',
@@ -19,16 +21,36 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 export class LoginComponent {
   private router = inject(Router);
   private fb = inject(NonNullableFormBuilder);
+  private authService = inject(AuthService);
+  private message = inject(NzMessageService);
+
   validateForm = this.fb.group({
     username: this.fb.control('', [Validators.required]),
     password: this.fb.control('', [Validators.required]),
     remember: this.fb.control(true)
   });
 
-  submitForm(): void {
+  isLoading = false;
+
+  async submitForm(): Promise<void> {
     if (this.validateForm.valid) {
-      console.log('submit', this.validateForm.value);
-      this.router.navigate(['/home']);
+      this.isLoading = true;
+
+      try {
+        const { username, password, remember } = this.validateForm.value;
+
+        // Folosește AuthService pentru login
+        await this.authService.signIn(username!, password!, remember!);
+
+        this.message.success('Login successful!');
+        this.router.navigate(['/home']);
+
+      } catch (error: any) {
+        console.error('Login error:', error);
+        this.message.error(error.message || 'Login failed. Please try again.');
+      } finally {
+        this.isLoading = false;
+      }
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {
@@ -38,4 +60,18 @@ export class LoginComponent {
       });
     }
   }
+
+  // submitForm(): void {
+  //   if (this.validateForm.valid) {
+  //     console.log('submit', this.validateForm.value);
+  //     this.router.navigate(['/home']);
+  //   } else {
+  //     Object.values(this.validateForm.controls).forEach(control => {
+  //       if (control.invalid) {
+  //         control.markAsDirty();
+  //         control.updateValueAndValidity({ onlySelf: true });
+  //       }
+  //     });
+  //   }
+  // }
 }
