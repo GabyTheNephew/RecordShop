@@ -24,7 +24,7 @@ export const routes: Routes = [
    },
    {
        path: 'shop',
-       loadComponent: () => import('./features/landing-page/shop/shop.component')
+       loadComponent: () => import('./features/shop-page/shop.component')
            .then(m => m.ShopComponent),
    },
    {

@@ -7,15 +7,15 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { FormsModule } from '@angular/forms';
 
-import { VinylComponent } from '../vinyl/vinyl.component';
-import { CdComponent } from '../cd/cd.component';
-import { VinylService } from '../../../core/services/vinyl.service';
-import { CdService } from '../../../core/services/cd.service';
-import { MusicShopService } from '../../../core/services/music-shop.service';
-import { CartService, CartItem } from '../../../core/services/cart.service';
+import { VinylComponent } from '../landing-page/vinyl/vinyl.component';
+import { CdComponent } from '../landing-page/cd/cd.component';
+import { VinylService } from '../../core/services/vinyl.service';
+import { CdService } from '../../core/services/cd.service';
+import { MusicShopService } from '../../core/services/music-shop.service';
+import { CartService, CartItem } from '../../core/services/cart.service';
 
-import { VinylContainer } from '../../../core/interfaces/vinyl.interface';
-import { CdContainer } from '../../../core/interfaces/cd.interface';
+import { VinylContainer } from '../../core/interfaces/vinyl.interface';
+import { CdContainer } from '../../core/interfaces/cd.interface';
 
 // Interface simplă pentru produsele unificate
 interface ProductItem {
