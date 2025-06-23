@@ -184,7 +184,6 @@ export class NavbarComponent {
     console.log('=== NAVBAR DEBUG ===');
     console.log('Current route:', this.currentRoute);
     console.log('Local searchedAlbums:', this.searchedAlbums.length);
-    this.search.debugState();
     this.search.getCurrentSearchState();
   }
 }

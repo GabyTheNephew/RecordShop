@@ -125,6 +125,5 @@ export class HomePageComponent implements OnInit, OnDestroy {
     console.log('Title:', this.search.title());
     console.log('Has search term:', this.hasSearchTerm);
     console.log('Search results:', this.searchResults);
-    this.search.debugState();
   }
 }

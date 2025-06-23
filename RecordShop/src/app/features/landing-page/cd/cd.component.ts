@@ -31,7 +31,7 @@ export class CdComponent implements OnInit {
     this.cartService.addToCart(this.cdText, this.cdPrice, 'cd');
     
     // Emit evenimentul pentru componenta părinte (dacă e necesar)
-    this.selectedCdName.emit(this.cdText);
+    //this.selectedCdName.emit(this.cdText);
     
     // Feedback vizual (opțional)
     console.log(`Added "${this.cdText}" to cart`);

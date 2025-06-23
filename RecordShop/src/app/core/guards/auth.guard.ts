@@ -5,11 +5,10 @@ import { AuthService } from '../services/auth.service';
 export const authGuard: CanActivateFn = async (route, state) => {
     const authService = inject(AuthService);
     const router = inject(Router);
-
-    // Așteaptă inițializarea completă a serviciului de autentificare
+    //asteapta sa se initializeze serviciul de autentificare
     await authService.waitForInitialization();
 
-    // Așteaptă puțin extra pentru ca Supabase să proceseze sesiunea
+    // asteapta extra ca Supabase sa proceseze sesiunea
     await new Promise(resolve => setTimeout(resolve, 100));
 
     if (authService.isAuthenticated()) {
@@ -24,10 +23,8 @@ export const loginGuard: CanActivateFn = async (route, state) => {
     const authService = inject(AuthService);
     const router = inject(Router);
 
-    // Așteaptă inițializarea completă a serviciului de autentificare
     await authService.waitForInitialization();
 
-    // Așteaptă puțin extra pentru ca Supabase să proceseze sesiunea
     await new Promise(resolve => setTimeout(resolve, 100));
 
     if (authService.isAuthenticated()) {
