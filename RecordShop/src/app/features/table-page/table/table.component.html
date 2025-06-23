@@ -10,6 +10,33 @@
       }
     </div>
     <div class="header-actions">
+      <!-- Sort dropdown -->
+      <nz-select 
+        [(ngModel)]="currentSortOption" 
+        (ngModelChange)="onSortChange($event)"
+        nzPlaceHolder="Sort by..."
+        style="width: 180px; margin-right: 8px;">
+        <nz-option nzValue="albumName-asc" nzLabel="Album Name (A-Z)"></nz-option>
+        <nz-option nzValue="albumName-desc" nzLabel="Album Name (Z-A)"></nz-option>
+        <nz-option nzValue="price-asc" nzLabel="Price (Low to High)"></nz-option>
+        <nz-option nzValue="price-desc" nzLabel="Price (High to Low)"></nz-option>
+        <nz-option nzValue="productType-asc" nzLabel="Type (CD first)"></nz-option>
+        <nz-option nzValue="productType-desc" nzLabel="Type (Vinyl first)"></nz-option>
+        <nz-option nzValue="stockQuantity-asc" nzLabel="Stock (Low to High)"></nz-option>
+        <nz-option nzValue="stockQuantity-desc" nzLabel="Stock (High to Low)"></nz-option>
+        <nz-option nzValue="soldQuantity-asc" nzLabel="Sold (Low to High)"></nz-option>
+        <nz-option nzValue="soldQuantity-desc" nzLabel="Sold (High to Low)"></nz-option>
+        <nz-option nzValue="controlNumber-asc" nzLabel="Control Number (A-Z)"></nz-option>
+        <nz-option nzValue="controlNumber-desc" nzLabel="Control Number (Z-A)"></nz-option>
+      </nz-select>
+      
+      <!-- Buton pentru a curăța sortarea -->
+      @if (currentSortOption) {
+        <button nz-button nzType="default" (click)="clearSort()" style="margin-right: 8px;" nz-tooltip="Clear sorting">
+          <span nz-icon nzType="undo"></span>
+        </button>
+      }
+      
       <!-- Buton pentru a curăța căutarea dacă există rezultate de căutare -->
       @if (musicShopService.title() && musicShopService.title().trim() !== '') {
         <button nz-button nzType="default" (click)="clearSearch()" style="margin-right: 8px;">
@@ -42,7 +69,7 @@
     </div>
   }
 
-  <!-- Tabel cu produse - afișează doar rândurile filtrate -->
+  <!-- Tabel cu produse - afișează doar rândurile filtrate și sortate -->
   <nz-table 
     #tableTable 
     [nzData]="filteredTables" 
