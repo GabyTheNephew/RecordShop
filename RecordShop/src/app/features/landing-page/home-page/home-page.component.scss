@@ -27,7 +27,7 @@
     
     // Stiluri pentru produsele de tip vinil
     app-vinyl {
-      .card-container {
+      ::ng-deep .card-container {
         display: inline-flex;
         flex-direction: column;
         border-radius: 2%;
@@ -37,7 +37,6 @@
         padding: 5%;
         box-sizing: border-box;
         position: relative;
-        background: rgba(255, 255, 255, 0.9);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s ease;
         
@@ -46,17 +45,18 @@
         }
       }
 
-      .images-container {
+      ::ng-deep .images-container {
         position: relative;
         display: flex;
         justify-content: center;
-        align-content: center;
+        align-items: center;
         height: 200px;
         margin-bottom: 1rem;
+        overflow: hidden;
       }
 
-      .image-container {
-        z-index: 1;
+      ::ng-deep .image-container {
+        z-index: 2;
         display: block;
         width: 100%;
         height: 100%;
@@ -68,7 +68,7 @@
         position: relative;
       }
 
-      .disc-image {
+      ::ng-deep .disc-image {
         z-index: 0;
         position: absolute;
         top: 50%;
@@ -84,16 +84,16 @@
         transition: all 0.3s ease;
       }
 
-      .images-container:hover .image-container {
+      ::ng-deep .images-container:hover .image-container {
         transform: translateX(-15px);
       }
 
-      .images-container:hover .disc-image {
+      ::ng-deep .images-container:hover .disc-image {
         opacity: 1;
         transform: translate(-30%, -50%) translateX(40px);
       }
 
-      .card-footer {
+      ::ng-deep .card-footer {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -102,7 +102,7 @@
         margin-top: auto;
       }
 
-      .card-button {
+      ::ng-deep .card-button {
         background-color: #8D2719;
         border: none;
         color: white;
@@ -116,7 +116,7 @@
         }
       }
 
-      .text-container {
+      ::ng-deep .text-container {
         font-size: 0.9rem;
         font-weight: 600;
         margin-bottom: 0.5rem;
@@ -131,7 +131,7 @@
 
     // Stiluri pentru produsele de tip CD
     app-cd {
-      .card-container {
+      ::ng-deep .card-container {
         display: inline-flex;
         flex-direction: column;
         border-radius: 2%;
@@ -141,7 +141,6 @@
         padding: 5%;
         box-sizing: border-box;
         position: relative;
-        background: rgba(255, 255, 255, 0.9);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s ease;
         
@@ -150,17 +149,18 @@
         }
       }
 
-      .images-container {
+      ::ng-deep .images-container {
         position: relative;
         display: flex;
         justify-content: center;
-        align-content: center;
+        align-items: center;
         height: 200px;
         margin-bottom: 1rem;
+        overflow: hidden;
       }
 
-      .image-container {
-        z-index: 1;
+      ::ng-deep .image-container {
+        z-index: 2;
         display: block;
         width: 100%;
         height: 100%;
@@ -172,7 +172,7 @@
         position: relative;
       }
 
-      .disc-image {
+      ::ng-deep .disc-image {
         z-index: 0;
         position: absolute;
         top: 50%;
@@ -188,16 +188,16 @@
         transition: all 0.3s ease;
       }
 
-      .images-container:hover .image-container {
+      ::ng-deep .images-container:hover .image-container {
         transform: translateX(-15px);
       }
 
-      .images-container:hover .disc-image {
+      ::ng-deep .images-container:hover .disc-image {
         opacity: 1;
         transform: translate(-30%, -50%) translateX(40px);
       }
 
-      .card-footer {
+      ::ng-deep .card-footer {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -206,10 +206,10 @@
         margin-top: auto;
       }
 
-      .card-button {
+      ::ng-deep .card-button {
         background-color: #8D2719;
         border: none;
-        color: white;
+        
         padding: 0.5rem 1rem;
         border-radius: 4px;
         cursor: pointer;
@@ -220,7 +220,7 @@
         }
       }
 
-      .text-container {
+      ::ng-deep .text-container {
         font-size: 0.9rem;
         font-weight: 600;
         margin-bottom: 0.5rem;
@@ -261,28 +261,25 @@
     .search-results-container {
       gap: 1.5rem;
       
-      app-vinyl .card-container,
-      app-cd .card-container {
-        width: 12rem;
-      }
+      app-vinyl, app-cd {
+        ::ng-deep .card-container {
+          width: 12rem;
+        }
 
-      app-vinyl .images-container,
-      app-cd .images-container {
-        height: 160px;
-      }
+        ::ng-deep .images-container {
+          height: 160px;
+        }
 
-      app-vinyl .image-container,
-      app-vinyl .disc-image,
-      app-cd .image-container,
-      app-cd .disc-image {
-        max-width: 140px;
-        max-height: 140px;
-      }
+        ::ng-deep .image-container,
+        ::ng-deep .disc-image {
+          max-width: 140px;
+          max-height: 140px;
+        }
 
-      app-vinyl .text-container,
-      app-cd .text-container {
-        font-size: 0.8rem;
-        min-height: 2.4rem;
+        ::ng-deep .text-container {
+          font-size: 0.8rem;
+          min-height: 2.4rem;
+        }
       }
     }
   }
@@ -300,29 +297,26 @@
     .search-results-container {
       gap: 1rem;
       
-      app-vinyl .card-container,
-      app-cd .card-container {
-        width: 280px;
-        max-width: 90vw;
-      }
+      app-vinyl, app-cd {
+        ::ng-deep .card-container {
+          width: 280px;
+          max-width: 90vw;
+        }
 
-      app-vinyl .images-container,
-      app-cd .images-container {
-        height: 200px;
-      }
+        ::ng-deep .images-container {
+          height: 200px;
+        }
 
-      app-vinyl .image-container,
-      app-vinyl .disc-image,
-      app-cd .image-container,
-      app-cd .disc-image {
-        max-width: 180px;
-        max-height: 180px;
-      }
+        ::ng-deep .image-container,
+        ::ng-deep .disc-image {
+          max-width: 180px;
+          max-height: 180px;
+        }
 
-      app-vinyl .text-container,
-      app-cd .text-container {
-        font-size: 0.9rem;
-        min-height: 2.6rem;
+        ::ng-deep .text-container {
+          font-size: 0.9rem;
+          min-height: 2.6rem;
+        }
       }
 
       .no-results p {

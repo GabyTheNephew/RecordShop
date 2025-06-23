@@ -21,6 +21,8 @@ export class NavbarComponent {
   ) {}
 
   goToTop() {
+    // Reset complete la navigarea la top
+    this.resetSearchState();
     this.router.navigate(['/home']).then(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
@@ -48,52 +50,93 @@ export class NavbarComponent {
   }
 
   goToAll() {
+    this.resetSearchState();
     this.router.navigate(['/home']).then(() => {
-      this.search.clearSearch();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
+  private resetSearchState() {
+    console.log('=== RESETTING SEARCH STATE ===');
+    this.searchedAlbums = [];
+    this.search.clearSearch();
+    this.search.clearSearchResults();
+    console.log('Search state reset complete');
+  }
+
   onSearch(term: string, inputEl: HTMLInputElement) {
-    // Verifică dacă termenul este gol
-    if (!term || term.trim() === '') {
+    console.log('=== NEW SEARCH INITIATED ===');
+    console.log('Search term:', term);
+    
+    // PRIMUL PAS: Reset complet al stării anterioare
+    this.resetSearchState();
+    
+    // Verifică dacă termenul este gol sau doar spații
+    const trimmedTerm = (term || '').trim();
+    if (!trimmedTerm) {
+      console.log('Empty search term, clearing input');
       inputEl.value = '';
-      this.searchedAlbums = [];
-      this.search.clearSearch();
       return;
     }
 
-    // Caută în ambele tipuri de produse folosind noua metodă
-    const results = this.search.searchAllProducts(term.trim());
+    console.log('Trimmed search term:', trimmedTerm);
+    
+    // AL DOILEA PAS: Efectuează căutarea
+    const results = this.search.searchAllProducts(trimmedTerm);
+    console.log('Search results found:', results);
     
     if (results.length > 0) {
-      // S-au găsit rezultate
-      this.searchedAlbums = results;
+      console.log('=== SEARCH SUCCESSFUL ===');
+      console.log('Number of results:', results.length);
+      
+      // Setează rezultatele în serviciu
       this.search.setSearchResults(results);
+      this.searchedAlbums = [...results]; // Copie locală
       
-      // Pentru compatibilitate cu componenta home-page, 
-      // setăm titlul cu primul rezultat
-      this.search.setTitle(term.trim());
+      // Setează titlul pentru afișare
+      this.search.setTitle(trimmedTerm);
       
-      // Navighează la home page
+      // Verifică starea după setare
+      console.log('Title set to:', this.search.title());
+      console.log('Results in service:', this.search.getSearchResults().length);
+      
+      // Navighează și scroll
       this.router.navigate(['/home']).then(() => {
+        console.log('Navigation complete, scrolling to top');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // Verificare finală după navigare
+        setTimeout(() => {
+          console.log('Final check - Title:', this.search.title());
+          console.log('Final check - Results:', this.search.getSearchResults().length);
+        }, 100);
       });
       
-      // Curăță input-ul
-      inputEl.value = '';
-      
     } else {
-      // Nu s-au găsit rezultate
-      this.searchedAlbums = [];
-      inputEl.value = '';
-      inputEl.placeholder = 'NO RESULTS';
-      inputEl.classList.add('no-result');
-      
-      setTimeout(() => {
-        inputEl.placeholder = 'Search albums, artists...';
-        inputEl.classList.remove('no-result');
-      }, 2000);
+      console.log('=== NO RESULTS FOUND ===');
+      this.showNoResultsMessage(inputEl);
     }
+    
+    // Curăță input-ul în orice caz
+    inputEl.value = '';
+  }
+
+  private showNoResultsMessage(inputEl: HTMLInputElement) {
+    inputEl.value = '';
+    inputEl.placeholder = 'NO RESULTS';
+    inputEl.classList.add('no-result');
+    
+    setTimeout(() => {
+      inputEl.placeholder = 'Search albums, artists...';
+      inputEl.classList.remove('no-result');
+    }, 2000);
+  }
+
+  // DEBUG METHOD - ȘTERGE DUPĂ TESTARE
+  debugSearch() {
+    console.log('=== NAVBAR DEBUG ===');
+    console.log('Local searchedAlbums:', this.searchedAlbums.length);
+    this.search.debugState();
+    this.search.getCurrentSearchState();
   }
 }
