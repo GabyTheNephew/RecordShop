@@ -2,16 +2,24 @@
 <app-header></app-header>
 @if (hasSearchTerm) {
   <div class="search-results-section">     
-    <h2 class="results-title">Search result:</h2>
+    <h2 class="results-title">Search results:</h2>
     <div class="search-results-container">  
-      @for (album of searchResults; track album.image) {
-        <app-vinyl [vinylCard]="album"></app-vinyl>  
+      @for (result of searchResults; track result.id) {
+        @if (result.type === 'vinyl') {
+          <app-vinyl [vinylCard]="getVinylData(result)" (selectedVinylName)="onProductSelect($event)"></app-vinyl>
+        } @else {
+          <app-cd [cdCard]="getCdData(result)" (selectedCdName)="onProductSelect($event)"></app-cd>
+        }
+      }
+      @if (searchResults.length === 0) {
+        <div class="no-results">
+          <p>No products found matching your search.</p>
+        </div>
       }
     </div>
   </div>
 }
 <app-vinyl-list id="vinyl-section"></app-vinyl-list>
 <app-cd-list id="cd-section"></app-cd-list>
-
 
 <app-footer></app-footer>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { environment } from '../../../environments/environments';
+import { environment } from '../../environments/environments';
 
 const STORAGE_KEY = 'finalprojectdawm.supabase.auth.token';
 

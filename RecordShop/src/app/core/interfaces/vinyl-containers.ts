@@ -6,6 +6,7 @@ export const VinylContainers: VinylContainer[] = [
     { image: 'album_covers/DawnFM.jpg', discImage: 'vinyl-image.png', text: 'DawnFM', price: 149.99 },
     { image: 'album_covers/EchoesOfSilence.jpg', discImage: 'vinyl-image.png', text: 'Echoes Of Silence', price: 149.99 },
     { image: 'album_covers/Starboy.jpg', discImage: 'vinyl-image.png', text: 'Starboy', price: 149.99 },
+    { image: '/album_covers/SOS.png',discImage:"vinyl-image.png",text: 'SOS', price: 149.99 },
     { image: 'album_covers/Thursday.jpg', discImage: 'vinyl-image.png', text: 'Thursday', price: 149.99 },
     { image: 'album_covers/AbbeyRoad.jpg', discImage: 'vinyl-image.png', text: 'Abby Road', price: 200.99 },
     { image: 'album_covers/arcane.jpg', discImage: 'vinyl-image.png', text: 'Arcane', price: 149.99 },

@@ -1,9 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { DOCUMENT, CommonModule } from '@angular/common';
-/* import { AuthService }   from '../../services/auth.service';
-import { CartService }   from '../../services/cart.service'; */
-import { MusicShopService} from '../../../core/services/music-shop.service';
+import { MusicShopService, SearchResult } from '../../../core/services/music-shop.service';
 import { VinylContainer } from '../../../core/interfaces/vinyl.interface';
 
 @Component({
@@ -14,12 +12,10 @@ import { VinylContainer } from '../../../core/interfaces/vinyl.interface';
   styleUrls  : ['./navbar.component.scss']
 })
 export class NavbarComponent {
-  searchedAlbums: VinylContainer[] = [];
+  searchedAlbums: SearchResult[] = [];
 
   constructor(
     private router : Router,
-    // public  auth   : AuthService,
-    // public  cart   : CartService,
     public  search : MusicShopService,
     @Inject(DOCUMENT) private doc: Document
   ) {}
@@ -48,13 +44,11 @@ export class NavbarComponent {
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
-    }, 100); // Mic delay pentru a se asigura că pagina s-a încărcat
+    }, 100);
   }
 
   goToAll() {
-    // Navighează la pagina home și afișează toate produsele
     this.router.navigate(['/home']).then(() => {
-      // Curăță rezultatele căutării pentru a afișa conținutul normal
       this.search.clearSearch();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
@@ -64,22 +58,25 @@ export class NavbarComponent {
     // Verifică dacă termenul este gol
     if (!term || term.trim() === '') {
       inputEl.value = '';
-      this.searchedAlbums = []; // Curăță rezultatele
-      this.search.clearSearch(); // Curăță și în serviciu
+      this.searchedAlbums = [];
+      this.search.clearSearch();
       return;
     }
 
-    // Caută rezultate
-    const results = this.search.searchAlbumByTitle(term.trim());
+    // Caută în ambele tipuri de produse folosind noua metodă
+    const results = this.search.searchAllProducts(term.trim());
     
     if (results.length > 0) {
-      // S-au găsit rezultate - setează rezultatele și titlul
+      // S-au găsit rezultate
       this.searchedAlbums = results;
+      this.search.setSearchResults(results);
+      
+      // Pentru compatibilitate cu componenta home-page, 
+      // setăm titlul cu primul rezultat
       this.search.setTitle(term.trim());
       
       // Navighează la home page
       this.router.navigate(['/home']).then(() => {
-        // Scroll la începutul paginii pentru a vedea rezultatele
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
       
@@ -87,7 +84,7 @@ export class NavbarComponent {
       inputEl.value = '';
       
     } else {
-      // Nu s-au găsit rezultate - afișează "NO RESULTS"
+      // Nu s-au găsit rezultate
       this.searchedAlbums = [];
       inputEl.value = '';
       inputEl.placeholder = 'NO RESULTS';
