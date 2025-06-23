@@ -1,7 +1,7 @@
 export interface VinylContainer
 {
     image: string
-    discImage: string  // Fac opțional pentru flexibilitate cu search results
+    discImage: string  
     text: string
     price: number
     

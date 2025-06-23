@@ -4,5 +4,5 @@ export interface SearchResult {
   price: number;
   image: string;
   type: 'vinyl' | 'cd';
-  discImage?: string; // Doar pentru viniluri
+  discImage?: string;
 }
