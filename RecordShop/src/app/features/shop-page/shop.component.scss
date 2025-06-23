@@ -1,171 +1,180 @@
+/* Shop - CSS simplu fără framework */
 .shop-container {
   width: 100%;
   min-height: 100vh;
   padding: 2rem;
-  padding-top: 80px; // SPAȚIU PENTRU NAVBAR FIX
+  padding-top: 80px;
+  /* SPAȚIU PENTRU NAVBAR FIX */
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
 .shop-header {
   text-align: center;
   margin-bottom: 3rem;
-  
-  .shop-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .shop-subtitle {
-    font-size: 1.2rem;
-    color: #666;
-    margin: 0 0 1rem 0;
-  }
-
-  // Stiluri pentru controalele de căutare
-  .search-controls {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-
-    button {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      transition: all 0.3s ease;
-
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-      }
-    }
-  }
 }
 
-// Stiluri pentru secțiunea "No Results"
+.shop-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.shop-subtitle {
+  font-size: 1.2rem;
+  color: #666;
+  margin: 0 0 1rem 0;
+}
+
+/* Stiluri pentru controalele de căutare */
+.search-controls {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.search-controls button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.search-controls button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Stiluri pentru secțiunea "No Results" */
 .no-results-section {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 400px;
   margin: 2rem 0;
+}
 
-  .no-results-content {
-    text-align: center;
-    padding: 3rem;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
+.no-results-content {
+  text-align: center;
+  padding: 3rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+}
 
-    h3 {
-      color: #595959;
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
+.no-results-content h3 {
+  color: #595959;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
 
-    p {
-      color: #8c8c8c;
-      margin-bottom: 2rem;
-      font-size: 1rem;
-      line-height: 1.6;
+.no-results-content p {
+  color: #8c8c8c;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
 
-      strong {
-        color: #262626;
-        font-weight: 600;
-      }
-    }
+.no-results-content p strong {
+  color: #262626;
+  font-weight: 600;
+}
 
-    button {
-      padding: 0.75rem 2rem;
-      font-size: 1rem;
-      border-radius: 8px;
-      background: #8D2719;
-      border-color: #8D2719;
-      
-      &:hover {
-        background: #903d32;
-        border-color: #903d32;
-        transform: translateY(-2px);
-      }
-    }
-  }
+.no-results-content button {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  background: #8D2719;
+  border-color: #8D2719;
+}
+
+.no-results-content button:hover {
+  background: #903d32;
+  border-color: #903d32;
+  transform: translateY(-2px);
 }
 
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); // 4 produse pe linie
+  grid-template-columns: repeat(4, 1fr);
+  /* 4 produse pe linie */
   gap: 2rem;
   max-width: 1400px;
   margin: 0 auto 4rem auto;
-  
-  .product-item {
-    display: flex;
-    justify-content: center;
-    
-    app-vinyl, app-cd {
-      width: 100%;
-      max-width: 300px;
-      
-      // Asigură dimensiuni uniforme pentru toate produsele
-      ::ng-deep .card-container {
-        height: 400px !important;
-        background: rgba(255, 255, 255, 0.9) !important;
-        border: 2px solid #ddd !important;
-        border-radius: 12px !important;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
-        transition: all 0.3s ease !important;
-        
-        &:hover {
-          transform: translateY(-8px) !important;
-          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
-        }
-        
-        // Stiluri pentru efectul de sliding - identice pentru CD și vinil
-        .images-container {
-          position: relative !important;
-          overflow: hidden !important;
-          
-          .image-container {
-            position: relative !important;
-            z-index: 2 !important;
-            transition: transform 0.3s ease !important;
-          }
-          
-          .disc-image {
-            position: absolute !important;
-            top: 50% !important;
-            left: 50% !important;
-            transform: translate(-50%, -50%) !important;
-            z-index: 0 !important;
-            opacity: 0 !important;
-            transition: all 0.3s ease !important;
-            width: 100% !important;
-            height: 100% !important;
-            object-fit: cover !important;
-          }
-          
-          // Efecte la hover pentru sliding
-          &:hover {
-            .image-container {
-              transform: translateX(-15px) !important;
-            }
-            
-            .disc-image {
-              opacity: 1 !important;
-              transform: translate(-30%, -50%) translateX(40px) !important;
-            }
-          }
-        }
-      }
-    }
-  }
+}
+
+.product-item {
+  display: flex;
+  justify-content: center;
+}
+
+.product-item app-vinyl,
+.product-item app-cd {
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Asigură dimensiuni uniforme pentru toate produsele */
+.product-item app-vinyl .card-container,
+.product-item app-cd .card-container {
+  height: 400px !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 2px solid #ddd !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.3s ease !important;
+}
+
+.product-item app-vinyl .card-container:hover,
+.product-item app-cd .card-container:hover {
+  transform: translateY(-8px) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Stiluri pentru efectul de sliding - identice pentru CD și vinil */
+.product-item app-vinyl .images-container,
+.product-item app-cd .images-container {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.product-item app-vinyl .image-container,
+.product-item app-cd .image-container {
+  position: relative !important;
+  z-index: 2 !important;
+  transition: transform 0.3s ease !important;
+}
+
+.product-item app-vinyl .disc-image,
+.product-item app-cd .disc-image {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 0 !important;
+  opacity: 0 !important;
+  transition: all 0.3s ease !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+/* Efecte la hover pentru sliding */
+.product-item app-vinyl .images-container:hover .image-container,
+.product-item app-cd .images-container:hover .image-container {
+  transform: translateX(-15px) !important;
+}
+
+.product-item app-vinyl .images-container:hover .disc-image,
+.product-item app-cd .images-container:hover .disc-image {
+  opacity: 1 !important;
+  transform: translate(-30%, -50%) translateX(40px) !important;
 }
 
 .shop-footer-buttons {
@@ -174,138 +183,135 @@
   gap: 2rem;
   margin-top: 3rem;
   padding: 2rem 0;
-  
-  .footer-btn {
-    padding: 1rem 2rem !important;
-    font-size: 1.1rem !important;
-    font-weight: 600 !important;
-    min-width: 150px !important;
-    height: 50px !important;
-    border-radius: 8px !important;
-    transition: all 0.3s ease !important;
-    
-    &.cart-btn {
-      background: #f0f0f0 !important;
-      border-color: #8D2719 !important;
-      color: #8D2719 !important;
-      
-      &:hover {
-        background: #8D2719 !important;
-        color: white !important;
-        transform: scale(1.05) !important;
-      }
-    }
-    
-    &.home-btn {
-      background: #8D2719 !important;
-      border-color: #8D2719 !important;
-      
-      &:hover {
-        background: #903d32 !important;
-        transform: scale(1.05) !important;
-      }
-    }
-  }
 }
 
-// Stiluri pentru modal-urile de coș
-.cart-content {
-  .empty-cart {
-    text-align: center;
-    padding: 2rem;
-    color: #666;
-    font-size: 1.1rem;
-  }
-  
-  .product-type {
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    
-    &.vinyl {
-      background: #e6f7ff;
-      color: #1890ff;
-    }
-    
-    &.cd {
-      background: #fff2e8;
-      color: #fa8c16;
-    }
-  }
-  
-  .item-total {
-    font-weight: 600;
-    color: #8D2719;
-  }
-  
-  .cart-summary {
-    margin-top: 1rem;
-    padding: 1rem;
-    background: #f5f5f5;
-    border-radius: 4px;
-    text-align: right;
-    
-    .total-price {
-      font-size: 1.2rem;
-      color: #8D2719;
-    }
-  }
-  
-  .cart-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 1.5rem;
-    gap: 1rem;
-    
-    button {
-      flex: 1;
-    }
-  }
+.footer-btn {
+  padding: 1rem 2rem !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  min-width: 150px !important;
+  height: 50px !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+}
+
+.footer-btn.cart-btn {
+  background: #f0f0f0 !important;
+  border-color: #8D2719 !important;
+  color: #8D2719 !important;
+}
+
+.footer-btn.cart-btn:hover {
+  background: #8D2719 !important;
+  color: white !important;
+  transform: scale(1.05) !important;
+}
+
+.footer-btn.home-btn {
+  background: #8D2719 !important;
+  border-color: #8D2719 !important;
+}
+
+.footer-btn.home-btn:hover {
+  background: #903d32 !important;
+  transform: scale(1.05) !important;
+}
+
+/* Stiluri pentru modal-urile de coș */
+.cart-content .empty-cart {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.product-type {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.product-type.vinyl {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.product-type.cd {
+  background: #fff2e8;
+  color: #fa8c16;
+}
+
+.item-total {
+  font-weight: 600;
+  color: #8D2719;
+}
+
+.cart-summary {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f5f5f5;
+  border-radius: 4px;
+  text-align: right;
+}
+
+.cart-summary .total-price {
+  font-size: 1.2rem;
+  color: #8D2719;
+}
+
+.cart-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  gap: 1rem;
+}
+
+.cart-actions button {
+  flex: 1;
 }
 
 .thank-you-content {
   text-align: center;
   padding: 2rem 1rem;
-  
-  .success-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-  }
-  
-  h3 {
-    color: #52c41a;
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-  }
-  
-  p {
-    margin-bottom: 1rem;
-    line-height: 1.6;
-    color: #666;
-  }
-  
-  button {
-    margin-top: 1rem;
-  }
 }
 
-// Responsive pentru modal-uri
+.success-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.thank-you-content h3 {
+  color: #52c41a;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.thank-you-content p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  color: #666;
+}
+
+.thank-you-content button {
+  margin-top: 1rem;
+}
+
+/* Responsive pentru modal-uri */
 @media (max-width: 768px) {
-  .cart-content {
-    .cart-actions {
-      flex-direction: column;
-      
-      button {
-        width: 100%;
-      }
-    }
+  .cart-content .cart-actions {
+    flex-direction: column;
+  }
+
+  .cart-content .cart-actions button {
+    width: 100%;
   }
 }
 
 @media (max-width: 1200px) {
   .products-grid {
-    grid-template-columns: repeat(3, 1fr); // 3 pe linie pe ecrane medii
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 pe linie pe ecrane medii */
     gap: 1.5rem;
   }
 }
@@ -313,102 +319,105 @@
 @media (max-width: 768px) {
   .shop-container {
     padding: 1rem;
-    padding-top: 70px; // AJUSTEAZĂ SPAȚIUL PE MOBILE
+    padding-top: 70px;
+    /* AJUSTEAZĂ SPAȚIUL PE MOBILE */
   }
-  
+
   .shop-header {
     margin-bottom: 2rem;
-    
-    .shop-title {
-      font-size: 2rem;
-    }
-    
-    .shop-subtitle {
-      font-size: 1rem;
-    }
-
-    .search-controls {
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-
-      button {
-        width: 100%;
-        max-width: 200px;
-      }
-    }
   }
-  
+
+  .shop-title {
+    font-size: 2rem;
+  }
+
+  .shop-subtitle {
+    font-size: 1rem;
+  }
+
+  .search-controls {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .search-controls button {
+    width: 100%;
+    max-width: 200px;
+  }
+
   .products-grid {
-    grid-template-columns: repeat(2, 1fr); // 2 pe linie pe tablet
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 pe linie pe tablet */
     gap: 1rem;
   }
-  
+
   .shop-footer-buttons {
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    
-    .footer-btn {
-      width: 100%;
-      max-width: 200px;
-    }
+  }
+
+  .footer-btn {
+    width: 100%;
+    max-width: 200px;
   }
 
   .no-results-section {
     min-height: 300px;
     margin: 1rem 0;
+  }
 
-    .no-results-content {
-      padding: 2rem 1rem;
-      margin: 0 1rem;
+  .no-results-content {
+    padding: 2rem 1rem;
+    margin: 0 1rem;
+  }
 
-      h3 {
-        font-size: 1.25rem;
-      }
+  .no-results-content h3 {
+    font-size: 1.25rem;
+  }
 
-      p {
-        font-size: 0.9rem;
-        margin-bottom: 1.5rem;
-      }
+  .no-results-content p {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
 
-      button {
-        padding: 0.6rem 1.5rem;
-        font-size: 0.9rem;
-      }
-    }
+  .no-results-content button {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
   }
 }
 
 @media (max-width: 480px) {
   .products-grid {
-    grid-template-columns: 1fr; // 1 pe linie pe mobile
+    grid-template-columns: 1fr;
+    /* 1 pe linie pe mobile */
   }
-  
+
   .shop-header .shop-title {
     font-size: 1.5rem;
   }
 
   .no-results-section {
     min-height: 250px;
+  }
 
-    .no-results-content {
-      padding: 1.5rem 1rem;
+  .no-results-content {
+    padding: 1.5rem 1rem;
+  }
 
-      h3 {
-        font-size: 1.1rem;
-        margin-bottom: 0.75rem;
-      }
+  .no-results-content h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
 
-      p {
-        font-size: 0.85rem;
-        margin-bottom: 1.25rem;
-      }
+  .no-results-content p {
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+  }
 
-      button {
-        padding: 0.5rem 1.25rem;
-        font-size: 0.85rem;
-      }
-    }
+  .no-results-content button {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.85rem;
   }
 }

@@ -1,3 +1,4 @@
+/* Login - CSS simplu fără framework */
 .login-container {
     display: flex;
     justify-content: center;
@@ -72,4 +73,25 @@
 
 .register-link a:hover {
     text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 576px) {
+    .login-container {
+        padding: 10px;
+    }
+
+    .login-card {
+        padding: 24px;
+        margin: 10px;
+        max-width: 100%;
+    }
+
+    .login-header h2 {
+        font-size: 20px;
+    }
+
+    .login-form-margin {
+        margin-bottom: 12px;
+    }
 }

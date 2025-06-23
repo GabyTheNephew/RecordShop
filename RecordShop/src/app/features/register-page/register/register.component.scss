@@ -1,3 +1,4 @@
+/* Register - CSS simplu fără framework */
 .register-container {
     display: flex;
     justify-content: center;
@@ -100,47 +101,14 @@
     text-transform: uppercase;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-    .register-card {
-        padding: 24px;
-        margin: 10px;
-        max-width: 100%;
-    }
-
-    .register-container {
-        padding: 10px;
-    }
-
-    .register-header h2 {
-        font-size: 24px;
-    }
+/* Form label and item styling */
+.ant-form-item {
+    margin-bottom: 20px;
 }
 
-/* Formular styling pentru mobile */
-@media (max-width: 576px) {
-    nz-form-label {
-        text-align: left !important;
-        padding-bottom: 8px;
-    }
-
-    nz-form-control {
-        width: 100% !important;
-    }
-
-    .register-area nz-form-control {
-        margin-left: 0 !important;
-    }
-}
-
-/* Fix pentru label-uri lungi */
-nz-form-label {
+.ant-form-label label {
     font-size: 14px;
     font-weight: 500;
-}
-
-nz-form-item {
-    margin-bottom: 20px;
 }
 
 /* Email validation states */
@@ -162,4 +130,36 @@ nz-form-item {
     top: 50%;
     transform: translateY(-50%);
     color: #52c41a;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .register-card {
+        padding: 24px;
+        margin: 10px;
+        max-width: 100%;
+    }
+
+    .register-container {
+        padding: 10px;
+    }
+
+    .register-header h2 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 576px) {
+    .ant-form-label {
+        text-align: left !important;
+        padding-bottom: 8px;
+    }
+
+    .ant-form-control {
+        width: 100% !important;
+    }
+
+    .register-area .ant-form-control {
+        margin-left: 0 !important;
+    }
 }

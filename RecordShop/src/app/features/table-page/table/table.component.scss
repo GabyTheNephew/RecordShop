@@ -1,397 +1,382 @@
+/* Table - CSS simplu fără framework */
 .table-container {
   padding: 24px;
-  margin-top: 56px; // SPAȚIU PENTRU NAVBAR FIX
+  margin-top: 56px;
+  /* SPAȚIU PENTRU NAVBAR FIX */
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.header-title-section {
+  flex: 1;
+}
+
+.header-title-section h2 {
+  margin: 0 0 8px 0;
+  color: #262626;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.search-info {
+  margin: 0;
+  color: #1890ff;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+/* Styling pentru dropdown-ul de sortare */
+.header-actions .ant-select .ant-select-selector {
+  border-color: #d9d9d9;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.header-actions .ant-select .ant-select-selector:hover {
+  border-color: #8D2719;
+}
+
+.header-actions .ant-select-focused .ant-select-selector {
+  border-color: #8D2719;
+  box-shadow: 0 0 0 2px rgba(141, 39, 25, 0.2);
+}
+
+/* Stiluri pentru secțiunea "No Results" */
+.no-results-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  background: #fafafa;
+  border-radius: 8px;
+  margin: 24px 0;
+}
+
+.no-results-content {
+  text-align: center;
+  padding: 2rem;
+}
+
+.no-results-icon {
+  font-size: 48px;
+  color: #d9d9d9;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.no-results-content h3 {
+  color: #595959;
+  font-size: 18px;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.no-results-content p {
+  color: #8c8c8c;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.no-results-content p strong {
+  color: #262626;
+}
+
+/* Table styling */
+.ant-table .ant-table-thead>tr>th {
+  background-color: #fafafa;
+  font-weight: 600;
+  color: #262626;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.ant-table .ant-table-tbody>tr>td {
+  padding: 12px 16px;
+  vertical-align: middle;
+}
+
+.ant-table .ant-table-tbody>tr:hover>td {
+  background-color: #f5f5f5;
+}
+
+/* Table image styling */
+.table-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+}
+
+.no-image {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #999;
+  text-align: center;
+}
+
+/* Text styling */
+.control-number {
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  color: #1890ff;
+  background-color: #e6f7ff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.album-name {
+  font-weight: 500;
+  color: #262626;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 180px;
+}
+
+.price {
+  font-weight: 600;
+  color: #52c41a;
+  font-size: 14px;
+}
+
+.quantity {
+  font-weight: 500;
+  color: #262626;
+  background-color: #f5f5f5;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  min-width: 30px;
+  text-align: center;
+}
+
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+/* Tags styling */
+.ant-tag {
+  margin: 0;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 12px;
+  padding: 2px 8px;
+}
+
+/* Modal form styling */
+.ant-modal-body {
+  padding: 24px;
+}
+
+.ant-form-item {
+  margin-bottom: 16px;
+}
+
+.ant-form-item-label>label {
+  font-weight: 500;
+  color: #262626;
+}
+
+.ant-input-number {
+  width: 100%;
+}
+
+.ant-select {
+  width: 100%;
+}
+
+/* Additional global styles for stock status indicators */
+.ant-tag-green {
+  background-color: #f6ffed;
+  border-color: #b7eb8f;
+  color: #52c41a;
+}
+
+.ant-tag-orange {
+  background-color: #fff7e6;
+  border-color: #ffd591;
+  color: #fa8c16;
+}
+
+.ant-tag-red {
+  background-color: #fff2f0;
+  border-color: #ffccc7;
+  color: #ff4d4f;
+}
+
+.ant-tag-blue {
+  background-color: #e6f7ff;
+  border-color: #91d5ff;
+  color: #1890ff;
+}
+
+.ant-tag-purple {
+  background-color: #f9f0ff;
+  border-color: #d3adf7;
+  color: #722ed1;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .table-container {
+    padding: 16px;
+    margin-top: 50px;
+    /* AJUSTEAZĂ SPAȚIUL PE MOBILE */
+  }
 
   .table-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 24px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid #f0f0f0;
-
-    .header-title-section {
-      flex: 1;
-      
-      h2 {
-        margin: 0 0 8px 0;
-        color: #262626;
-        font-size: 24px;
-        font-weight: 600;
-      }
-
-      .search-info {
-        margin: 0;
-        color: #1890ff;
-        font-size: 14px;
-        font-weight: 500;
-      }
-    }
-
-    .header-actions {
-      display: flex;
-      gap: 8px;
-      align-items: flex-start;
-      flex-wrap: wrap;
-
-      // Styling pentru dropdown-ul de sortare
-      nz-select {
-        min-width: 180px;
-
-        ::ng-deep {
-          .ant-select-selector {
-            border-color: #d9d9d9;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-
-            &:hover {
-              border-color: #8D2719;
-            }
-          }
-
-          .ant-select-focused .ant-select-selector {
-            border-color: #8D2719;
-            box-shadow: 0 0 0 2px rgba(141, 39, 25, 0.2);
-          }
-        }
-      }
-    }
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
   }
 
-  // Stiluri pentru secțiunea "No Results"
-  .no-results-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 300px;
-    background: #fafafa;
-    border-radius: 8px;
-    margin: 24px 0;
-
-    .no-results-content {
-      text-align: center;
-      padding: 2rem;
-
-      .no-results-icon {
-        font-size: 48px;
-        color: #d9d9d9;
-        margin-bottom: 16px;
-        display: block;
-      }
-
-      h3 {
-        color: #595959;
-        font-size: 18px;
-        margin-bottom: 12px;
-        font-weight: 500;
-      }
-
-      p {
-        color: #8c8c8c;
-        margin-bottom: 24px;
-        font-size: 14px;
-
-        strong {
-          color: #262626;
-        }
-      }
-    }
-  }
-
-  // Table styling
-  ::ng-deep {
-    .ant-table {
-      .ant-table-thead > tr > th {
-        background-color: #fafafa;
-        font-weight: 600;
-        color: #262626;
-        border-bottom: 2px solid #f0f0f0;
-      }
-
-      .ant-table-tbody > tr > td {
-        padding: 12px 16px;
-        vertical-align: middle;
-      }
-
-      .ant-table-tbody > tr:hover > td {
-        background-color: #f5f5f5;
-      }
-    }
-  }
-
-  // Table image styling
-  .table-image {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 4px;
-    border: 1px solid #d9d9d9;
-  }
-
-  .no-image {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f5f5f5;
-    border: 1px solid #d9d9d9;
-    border-radius: 4px;
-    font-size: 12px;
-    color: #999;
+  .header-title-section h2 {
+    font-size: 20px;
     text-align: center;
   }
 
-  // Text styling
-  .control-number {
-    font-family: 'Courier New', monospace;
-    font-weight: 600;
-    color: #1890ff;
-    background-color: #e6f7ff;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 12px;
+  .header-title-section .search-info {
+    text-align: center;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .header-actions .ant-select {
+    width: 100% !important;
+    min-width: auto;
+  }
+
+  .header-actions button {
+    width: 100%;
   }
 
   .album-name {
-    font-weight: 500;
-    color: #262626;
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 180px;
+    max-width: 120px;
   }
 
-  .price {
-    font-weight: 600;
-    color: #52c41a;
-    font-size: 14px;
+  .no-results-section {
+    min-height: 200px;
+    margin: 16px 0;
   }
 
-  .quantity {
-    font-weight: 500;
-    color: #262626;
-    background-color: #f5f5f5;
-    padding: 4px 8px;
-    border-radius: 4px;
-    display: inline-block;
-    min-width: 30px;
-    text-align: center;
+  .no-results-content {
+    padding: 1rem;
   }
 
-  // Action buttons
-  .action-buttons {
-    display: flex;
-    gap: 4px;
-    justify-content: center;
+  .no-results-content .no-results-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
   }
 
-  // Tags styling
-  ::ng-deep {
-    .ant-tag {
-      margin: 0;
-      border-radius: 4px;
-      font-weight: 500;
-      font-size: 12px;
-      padding: 2px 8px;
-    }
+  .no-results-content h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
   }
 
-  // Modal form styling
-  ::ng-deep {
-    .ant-modal-body {
-      padding: 24px;
-    }
-
-    .ant-form-item {
-      margin-bottom: 16px;
-    }
-
-    .ant-form-item-label > label {
-      font-weight: 500;
-      color: #262626;
-    }
-
-    .ant-input-number {
-      width: 100%;
-    }
-
-    .ant-select {
-      width: 100%;
-    }
+  .no-results-content p {
+    font-size: 13px;
+    margin-bottom: 16px;
   }
 
-  // Responsive design
-  @media (max-width: 768px) {
-    padding: 16px;
-    margin-top: 50px; // AJUSTEAZĂ SPAȚIUL PE MOBILE
-
-    .table-header {
-      flex-direction: column;
-      gap: 16px;
-      align-items: stretch;
-
-      .header-title-section {
-        h2 {
-          font-size: 20px;
-          text-align: center;
-        }
-
-        .search-info {
-          text-align: center;
-        }
-      }
-
-      .header-actions {
-        flex-direction: column;
-        gap: 12px;
-        align-items: stretch;
-
-        nz-select {
-          width: 100% !important;
-          min-width: auto;
-        }
-
-        button {
-          width: 100%;
-        }
-      }
-    }
-
-    .album-name {
-      max-width: 120px;
-    }
-
-    .no-results-section {
-      min-height: 200px;
-      margin: 16px 0;
-
-      .no-results-content {
-        padding: 1rem;
-
-        .no-results-icon {
-          font-size: 36px;
-          margin-bottom: 12px;
-        }
-
-        h3 {
-          font-size: 16px;
-          margin-bottom: 8px;
-        }
-
-        p {
-          font-size: 13px;
-          margin-bottom: 16px;
-        }
-      }
-    }
-
-    ::ng-deep {
-      .ant-table {
-        font-size: 12px;
-      }
-
-      .ant-modal {
-        margin: 16px;
-        max-width: calc(100vw - 32px);
-      }
-
-      .ant-form-item-label {
-        text-align: left !important;
-      }
-    }
+  .ant-table {
+    font-size: 12px;
   }
 
-  @media (max-width: 576px) {
-    padding: 12px;
+  .ant-modal {
+    margin: 16px;
+    max-width: calc(100vw - 32px);
+  }
 
-    .table-image,
-    .no-image {
-      width: 40px;
-      height: 40px;
-    }
-
-    .control-number {
-      font-size: 10px;
-      padding: 1px 4px;
-    }
-
-    .album-name {
-      max-width: 100px;
-      font-size: 12px;
-    }
-
-    .price {
-      font-size: 12px;
-    }
-
-    .quantity {
-      font-size: 11px;
-      padding: 2px 6px;
-      min-width: 25px;
-    }
-
-    .header-actions {
-      flex-direction: column;
-      gap: 8px;
-
-      nz-select {
-        width: 100% !important;
-        min-width: auto;
-      }
-
-      button {
-        width: 100%;
-      }
-    }
-
-    ::ng-deep {
-      .ant-tag {
-        font-size: 10px;
-        padding: 1px 6px;
-      }
-
-      .ant-btn {
-        padding: 4px 8px;
-        font-size: 12px;
-      }
-    }
+  .ant-form-item-label {
+    text-align: left !important;
   }
 }
 
-// Additional global styles for stock status indicators
-::ng-deep {
-  .ant-tag-green {
-    background-color: #f6ffed;
-    border-color: #b7eb8f;
-    color: #52c41a;
+@media (max-width: 576px) {
+  .table-container {
+    padding: 12px;
   }
 
-  .ant-tag-orange {
-    background-color: #fff7e6;
-    border-color: #ffd591;
-    color: #fa8c16;
+  .table-image,
+  .no-image {
+    width: 40px;
+    height: 40px;
   }
 
-  .ant-tag-red {
-    background-color: #fff2f0;
-    border-color: #ffccc7;
-    color: #ff4d4f;
+  .control-number {
+    font-size: 10px;
+    padding: 1px 4px;
   }
 
-  .ant-tag-blue {
-    background-color: #e6f7ff;
-    border-color: #91d5ff;
-    color: #1890ff;
+  .album-name {
+    max-width: 100px;
+    font-size: 12px;
   }
 
-  .ant-tag-purple {
-    background-color: #f9f0ff;
-    border-color: #d3adf7;
-    color: #722ed1;
+  .price {
+    font-size: 12px;
+  }
+
+  .quantity {
+    font-size: 11px;
+    padding: 2px 6px;
+    min-width: 25px;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .header-actions .ant-select {
+    width: 100% !important;
+    min-width: auto;
+  }
+
+  .header-actions button {
+    width: 100%;
+  }
+
+  .ant-tag {
+    font-size: 10px;
+    padding: 1px 6px;
+  }
+
+  .ant-btn {
+    padding: 4px 8px;
+    font-size: 12px;
   }
 }

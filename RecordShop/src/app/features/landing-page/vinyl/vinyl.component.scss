@@ -1,10 +1,10 @@
+/* Vinyl Component - CSS simplu fără framework */
 .card-container {
     display: inline-flex;
     flex-direction: column;
     border-radius: 2%;
     border: 2px solid grey;
     width: 15rem;
-    // height: ;
     overflow: hidden;
     padding: 5%;
     box-sizing: border-box;
@@ -15,7 +15,7 @@
     position: relative;
     display: flex;
     justify-content: center;
-    align-content: center;
+    align-items: center;
 }
 
 .image-container {
@@ -41,19 +41,13 @@
 }
 
 .card-button {
-    // padding: 1.5vh 2vw;
-    // font-size: 85%;
     background-color: #8D2719;
-    border: none;
-    // color: white;
-    // border: none;
-    // border-radius: 0.25rem;
-    // font-weight: 600;
+    border-color: #8D2719;
 }
 
 .card-button:hover {
-    background-color: #903d32;
-    cursor: pointer;
+    background-color: #903d32 !important;
+    border-color: #903d32 !important;
 }
 
 .text-container {
@@ -75,4 +69,80 @@
 
 .images-container:hover .disc-image {
     transform: scale(0.8) translateX(40px);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .image-container {
+        width: 16vw;
+    }
+
+    .disc-image {
+        width: 16vw;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-container {
+        width: 12rem;
+        padding: 4%;
+    }
+
+    .image-container {
+        width: 20vw;
+        min-width: 150px;
+    }
+
+    .disc-image {
+        width: 20vw;
+        min-width: 150px;
+    }
+
+    .text-container {
+        font-size: 2vh;
+    }
+
+    .images-container:hover .image-container {
+        transform: scale(0.8) translateX(-30px);
+    }
+
+    .images-container:hover .disc-image {
+        transform: scale(0.8) translateX(30px);
+    }
+}
+
+@media (max-width: 576px) {
+    .card-container {
+        width: 10rem;
+        padding: 3%;
+    }
+
+    .image-container {
+        width: 25vw;
+        min-width: 120px;
+    }
+
+    .disc-image {
+        width: 25vw;
+        min-width: 120px;
+    }
+
+    .text-container {
+        font-size: 1.8vh;
+        min-height: 2.5rem;
+    }
+
+    .card-footer {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .images-container:hover .image-container {
+        transform: scale(0.8) translateX(-20px);
+    }
+
+    .images-container:hover .disc-image {
+        transform: scale(0.8) translateX(20px);
+    }
 }

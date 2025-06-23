@@ -1,14 +1,15 @@
+/* Vinyl List - CSS simplu fără framework */
 .our-vinyls-container {
   width: 100%;
   padding: 2rem;
-  
-  .our-vinyls-title {
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 2rem;
-    color: #333;
-  }
+}
+
+.our-vinyls-title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
 }
 
 .vinyl-carousel-container {
@@ -33,21 +34,21 @@
   cursor: pointer;
   transition: all 0.3s ease;
   z-index: 10;
-  
-  &:hover:not(:disabled) {
-    background: rgba(0, 0, 0, 0.9);
-    transform: scale(1.1);
-  }
-  
-  &:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
-  
-  svg {
-    width: 24px;
-    height: 24px;
-  }
+}
+
+.carousel-nav-btn:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.1);
+}
+
+.carousel-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.carousel-nav-btn svg {
+  width: 24px;
+  height: 24px;
 }
 
 .vinyl-list-container {
@@ -63,24 +64,16 @@
 }
 
 .vinyl-slide {
-  flex: 0 0 33.333%;  // 3 items per view pe desktop
+  flex: 0 0 33.333%;
+  /* 3 items per view pe desktop */
   padding: 0.5rem;
   box-sizing: border-box;
-  
-  app-vinyl {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-  
-  // Responsive design
-  @media (max-width: 768px) {
-    flex: 0 0 50%;  // 2 items per view pe tablet
-  }
-  
-  @media (max-width: 480px) {
-    flex: 0 0 100%;  // 1 item per view pe mobile
-  }
+}
+
+.vinyl-slide app-vinyl {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .carousel-indicators {
@@ -98,256 +91,261 @@
   background: rgba(0, 0, 0, 0.3);
   cursor: pointer;
   transition: all 0.3s ease;
-  
-  &.active {
-    background: #007bff;
-    transform: scale(1.2);
-  }
-  
-  &:hover {
-    background: rgba(0, 0, 0, 0.6);
-  }
 }
 
-// Responsive pentru carousel
+.carousel-indicator.active {
+  background: #007bff;
+  transform: scale(1.2);
+}
+
+.carousel-indicator:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+/* Stiluri pentru animații smooth și dimensiuni uniforme */
+.vinyl-slide app-vinyl {
+  transition: transform 0.3s ease;
+  display: block;
+  height: 400px !important;
+  /* Înălțime fixă pentru toate cardurile */
+}
+
+.vinyl-slide app-vinyl:hover {
+  transform: translateY(-5px);
+}
+
+/* Forțează dimensiuni uniforme pentru cardurile vinilurilor */
+.vinyl-slide app-vinyl .card-container {
+  height: 100% !important;
+  width: 100% !important;
+  max-width: 280px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border-radius: 8px !important;
+  border: 2px solid #ddd !important;
+  overflow: hidden !important;
+  padding: 1rem !important;
+  box-sizing: border-box !important;
+  margin: 0 auto !important;
+  background: transparent !important;
+  /* Fundal transparent */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.vinyl-slide app-vinyl .images-container {
+  height: 250px !important;
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.vinyl-slide app-vinyl .image-container {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 200px !important;
+  max-height: 200px !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 4px !important;
+  aspect-ratio: 1 / 1 !important;
+  /* Forțează aspect pătrat pentru viniluri */
+  z-index: 2 !important;
+  /* Copertă peste disc */
+  transition: transform 0.3s ease !important;
+  position: relative !important;
+}
+
+.vinyl-slide app-vinyl .disc-image {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 200px !important;
+  max-height: 200px !important;
+  object-fit: cover !important;
+  aspect-ratio: 1 / 1 !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  /* Centrat perfect în container */
+  z-index: 0 !important;
+  /* Disc în spate */
+  opacity: 0 !important;
+  /* Invizibil inițial */
+  transition: all 0.3s ease !important;
+}
+
+/* Efecte la hover - discul iese din centrul copertei */
+.vinyl-slide app-vinyl .images-container:hover .image-container {
+  transform: translateX(-15px) !important;
+  /* Copertă se mută puțin stânga */
+}
+
+.vinyl-slide app-vinyl .images-container:hover .disc-image {
+  opacity: 1 !important;
+  /* Devine vizibil la hover */
+  transform: translate(-30%, -50%) translateX(40px) !important;
+  /* Iese din centrul copertei spre dreapta */
+}
+
+.vinyl-slide app-vinyl .text-container {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  text-align: center !important;
+  padding: 0.5rem 0 !important;
+  min-height: 60px !important;
+}
+
+/* Titlu album */
+.vinyl-slide app-vinyl .text-container h3,
+.vinyl-slide app-vinyl .text-container .album-title {
+  font-size: 0.9rem !important;
+  font-weight: bold !important;
+  margin: 0.25rem 0 !important;
+  line-height: 1.2 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  color: #333 !important;
+}
+
+/* Artist */
+.vinyl-slide app-vinyl .text-container p,
+.vinyl-slide app-vinyl .text-container .artist-name {
+  font-size: 0.8rem !important;
+  color: #666 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.vinyl-slide app-vinyl .card-footer {
+  height: 50px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding-top: 0.5rem !important;
+  margin-top: auto !important;
+}
+
+.vinyl-slide app-vinyl .card-button {
+  padding: 0.5rem 1rem !important;
+  font-size: 0.8rem !important;
+  background-color: #8D2719 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+}
+
+.vinyl-slide app-vinyl .card-button:hover {
+  background-color: #903d32 !important;
+}
+
+/* Responsive design */
 @media (max-width: 768px) {
-  .vinyl-carousel-container {
-    .carousel-nav-btn {
-      width: 40px;
-      height: 40px;
-      
-      svg {
-        width: 20px;
-        height: 20px;
-      }
-    }
+  .vinyl-slide {
+    flex: 0 0 50%;
+    /* 2 items per view pe tablet */
   }
-  
+
+  .carousel-nav-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .carousel-nav-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
   .our-vinyls-container {
     padding: 1rem;
-    
-    .our-vinyls-title {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-    }
+  }
+
+  .our-vinyls-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .vinyl-slide app-vinyl {
+    height: 380px !important;
+  }
+
+  .vinyl-slide app-vinyl .card-container {
+    max-width: 250px !important;
+    padding: 0.8rem !important;
+  }
+
+  .vinyl-slide app-vinyl .images-container {
+    height: 220px !important;
+  }
+
+  .vinyl-slide app-vinyl .image-container,
+  .vinyl-slide app-vinyl .disc-image {
+    max-width: 180px !important;
+    max-height: 180px !important;
   }
 }
 
 @media (max-width: 480px) {
+  .vinyl-slide {
+    flex: 0 0 100%;
+    /* 1 item per view pe mobile */
+  }
+
   .vinyl-carousel-container {
     gap: 0.5rem;
-    
-    .carousel-nav-btn {
-      width: 35px;
-      height: 35px;
-      
-      svg {
-        width: 18px;
-        height: 18px;
-      }
-    }
   }
-  
-  .carousel-indicators {
-    .carousel-indicator {
-      width: 10px;
-      height: 10px;
-    }
-  }
-}
 
-// Stiluri pentru animații smooth și dimensiuni uniforme
-.vinyl-slide {
-  app-vinyl {
-    transition: transform 0.3s ease;
-    display: block;
-    height: 400px !important; // Înălțime fixă pentru toate cardurile
-    
-    &:hover {
-      transform: translateY(-5px);
-    }
-    
-    // Forțează dimensiuni uniforme pentru cardurile vinilurilor
-    ::ng-deep {
-      .card-container {
-        height: 100% !important;
-        width: 100% !important;
-        max-width: 280px !important;
-        display: flex !important;
-        flex-direction: column !important;
-        border-radius: 8px !important;
-        border: 2px solid #ddd !important;
-        overflow: hidden !important;
-        padding: 1rem !important;
-        box-sizing: border-box !important;
-        margin: 0 auto !important;
-        background: transparent !important; // Fundal transparent
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
-      }
-      
-      .images-container {
-        height: 250px !important;
-        width: 100% !important;
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        position: relative !important;
-        overflow: hidden !important;
-        
-        .image-container {
-          width: 100% !important;
-          height: 100% !important;
-          max-width: 200px !important;
-          max-height: 200px !important;
-          object-fit: cover !important;
-          object-position: center !important;
-          border-radius: 4px !important;
-          aspect-ratio: 1 / 1 !important; // Forțează aspect pătrat pentru viniluri
-          z-index: 2 !important; // Copertă peste disc
-          transition: transform 0.3s ease !important;
-          position: relative !important;
-        }
-        
-        .disc-image {
-          width: 100% !important;
-          height: 100% !important;
-          max-width: 200px !important;
-          max-height: 200px !important;
-          object-fit: cover !important;
-          aspect-ratio: 1 / 1 !important;
-          position: absolute !important;
-          top: 50% !important;
-          left: 50% !important;
-          transform: translate(-50%, -50%) !important; // Centrat perfect în container
-          z-index: 0 !important; // Disc în spate (ca în originalul tău)
-          opacity: 0 !important; // Invizibil inițial
-          transition: all 0.3s ease !important;
-        }
-        
-        // Efecte la hover - discul iese din centrul copertei
-        &:hover {
-          .image-container {
-            transform: translateX(-15px) !important; // Copertă se mută puțin stânga
-          }
-          
-          .disc-image {
-            opacity: 1 !important; // Devine vizibil la hover
-            transform: translate(-30%, -50%) translateX(40px) !important; // Iese din centrul copertei spre dreapta
-          }
-        }
-      }
-      
-      .text-container {
-        flex: 1 !important;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: center !important;
-        text-align: center !important;
-        padding: 0.5rem 0 !important;
-        min-height: 60px !important;
-        
-        // Titlu album
-        h3, .album-title {
-          font-size: 0.9rem !important;
-          font-weight: bold !important;
-          margin: 0.25rem 0 !important;
-          line-height: 1.2 !important;
-          overflow: hidden !important;
-          text-overflow: ellipsis !important;
-          display: -webkit-box !important;
-          -webkit-line-clamp: 2 !important;
-          -webkit-box-orient: vertical !important;
-          color: #333 !important;
-        }
-        
-        // Artist
-        p, .artist-name {
-          font-size: 0.8rem !important;
-          color: #666 !important;
-          margin: 0 !important;
-          overflow: hidden !important;
-          text-overflow: ellipsis !important;
-          white-space: nowrap !important;
-        }
-      }
-      
-      .card-footer {
-        height: 50px !important;
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        padding-top: 0.5rem !important;
-        margin-top: auto !important;
-        
-        .card-button {
-          padding: 0.5rem 1rem !important;
-          font-size: 0.8rem !important;
-          background-color: #8D2719 !important;
-          color: white !important;
-          border: none !important;
-          border-radius: 4px !important;
-          cursor: pointer !important;
-          
-          &:hover {
-            background-color: #903d32 !important;
-          }
-        }
-      }
-    }
+  .carousel-nav-btn {
+    width: 35px;
+    height: 35px;
   }
-  
-  // Responsive pentru dimensiuni carduri
-  @media (max-width: 768px) {
-    app-vinyl {
-      height: 380px !important;
-      
-      ::ng-deep {
-        .card-container {
-          max-width: 250px !important;
-          padding: 0.8rem !important;
-        }
-        
-        .images-container {
-          height: 220px !important;
-          
-          .image-container, .disc-image {
-            max-width: 180px !important;
-            max-height: 180px !important;
-          }
-        }
-      }
-    }
+
+  .carousel-nav-btn svg {
+    width: 18px;
+    height: 18px;
   }
-  
-  @media (max-width: 480px) {
-    app-vinyl {
-      height: 420px !important;
-      
-      ::ng-deep {
-        .card-container {
-          max-width: 300px !important;
-          padding: 1rem !important;
-        }
-        
-        .images-container {
-          height: 260px !important;
-          
-          .image-container, .disc-image {
-            max-width: 220px !important;
-            max-height: 220px !important;
-          }
-        }
-        
-        .text-container {
-          h3, .album-title {
-            font-size: 1rem !important;
-          }
-          
-          p, .artist-name {
-            font-size: 0.85rem !important;
-          }
-        }
-      }
-    }
+
+  .carousel-indicators .carousel-indicator {
+    width: 10px;
+    height: 10px;
+  }
+
+  .vinyl-slide app-vinyl {
+    height: 420px !important;
+  }
+
+  .vinyl-slide app-vinyl .card-container {
+    max-width: 300px !important;
+    padding: 1rem !important;
+  }
+
+  .vinyl-slide app-vinyl .images-container {
+    height: 260px !important;
+  }
+
+  .vinyl-slide app-vinyl .image-container,
+  .vinyl-slide app-vinyl .disc-image {
+    max-width: 220px !important;
+    max-height: 220px !important;
+  }
+
+  .vinyl-slide app-vinyl .text-container h3,
+  .vinyl-slide app-vinyl .text-container .album-title {
+    font-size: 1rem !important;
+  }
+
+  .vinyl-slide app-vinyl .text-container p,
+  .vinyl-slide app-vinyl .text-container .artist-name {
+    font-size: 0.85rem !important;
   }
 }
