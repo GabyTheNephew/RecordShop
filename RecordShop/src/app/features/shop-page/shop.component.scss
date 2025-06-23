@@ -2,6 +2,7 @@
   width: 100%;
   min-height: 100vh;
   padding: 2rem;
+  padding-top: 80px; // ADAUGĂ SPAȚIU PENTRU NAVBAR FIX
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
@@ -228,6 +229,7 @@
     }
   }
 }
+
 @media (max-width: 1200px) {
   .products-grid {
     grid-template-columns: repeat(3, 1fr); // 3 pe linie pe ecrane medii
@@ -238,6 +240,7 @@
 @media (max-width: 768px) {
   .shop-container {
     padding: 1rem;
+    padding-top: 70px; // AJUSTEAZĂ SPAȚIUL PE MOBILE
   }
   
   .shop-header {

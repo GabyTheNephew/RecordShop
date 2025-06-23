@@ -11,6 +11,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NavbarComponent } from '../../landing-page/navbar/navbar.component'; // ADAUGĂ IMPORT
 import { Table } from '../../../core/interfaces/table.interface';
 import { TableService } from '../../../core/services/table.service';
 
@@ -28,12 +29,16 @@ import { TableService } from '../../../core/services/table.service';
     NzSelectModule,
     NzIconModule,
     NzTagModule,
-    NzInputNumberModule
+    NzInputNumberModule,
+    NavbarComponent // ADAUGĂ ÎN IMPORTS
   ],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit {
+closeThankYou() {
+throw new Error('Method not implemented.');
+}
   tables: Table[] = [];
   tableForm: FormGroup;
   isEditMode = false;

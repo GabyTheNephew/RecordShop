@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 
 import { VinylComponent } from '../landing-page/vinyl/vinyl.component';
 import { CdComponent } from '../landing-page/cd/cd.component';
+import { NavbarComponent } from '../landing-page/navbar/navbar.component'; // ADAUGĂ IMPORT
 import { VinylService } from '../../core/services/vinyl.service';
 import { CdService } from '../../core/services/cd.service';
 import { MusicShopService } from '../../core/services/music-shop.service';
@@ -36,7 +37,8 @@ interface ProductItem {
     NzInputNumberModule,
     FormsModule,
     VinylComponent,
-    CdComponent
+    CdComponent,
+    NavbarComponent // ADAUGĂ ÎN IMPORTS
   ],
   templateUrl: './shop.component.html',
   styleUrl: './shop.component.scss'
