@@ -20,7 +20,7 @@ export class MusicShopService {
   
   public title = signal<string>('');
   private searchResults: SearchResult[] = [];
-  private searchId: number = 0; // Pentru tracking căutări
+  private searchId: number = 0;
 
   listOfAlbums: VinylContainer[] = VinylContainers;
   listOfCds: CdContainer[] = CdContainers;
@@ -39,7 +39,6 @@ export class MusicShopService {
     const term = searchTerm.toLowerCase();
     const results: SearchResult[] = [];
 
-    // Caută în viniluri
     const vinylResults = this.listOfAlbums.filter(vinyl => {
     const match = vinyl.text.toLowerCase().includes(term);
     return match;
@@ -105,7 +104,7 @@ export class MusicShopService {
   }
 
   getSearchResults(): SearchResult[] {
-    return [...this.searchResults]; // Returnează o copie
+    return [...this.searchResults];
   }
 
   clearSearchResults(): void {
