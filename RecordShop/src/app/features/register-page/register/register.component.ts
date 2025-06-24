@@ -60,7 +60,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     agree: this.fb.control(false)
   });
 
-  // Pentru indicatorul de complexitate parolă
   get passwordStrength(): string {
     const password = this.validateForm.get('password')?.value || '';
     const checks = [
@@ -107,7 +106,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
       } catch (error: any) {
         console.error('Registration error:', error);
 
-        // Personalizează mesajul în funcție de tipul erorii
         let errorMessage = 'Registration failed. Please try again.';
 
         if (error.message.toLowerCase().includes('already') ||

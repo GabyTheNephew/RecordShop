@@ -30,14 +30,13 @@
         <nz-option nzValue="controlNumber-desc" nzLabel="Control Number (Z-A)"></nz-option>
       </nz-select>
       
-      <!-- Buton pentru a curăța sortarea -->
+      <!-- Buton pentru a curata sortarea -->
       @if (currentSortOption) {
         <button nz-button nzType="default" (click)="clearSort()" style="margin-right: 8px;" nz-tooltip="Clear sorting">
           <span nz-icon nzType="undo"></span>
         </button>
       }
       
-      <!-- Buton pentru a curăța căutarea dacă există rezultate de căutare -->
       @if (musicShopService.title() && musicShopService.title().trim() !== '') {
         <button nz-button nzType="default" (click)="clearSearch()" style="margin-right: 8px;">
           <span nz-icon nzType="close"></span>
@@ -55,7 +54,6 @@
     </div>
   </div>
 
-  <!-- Mesaj când nu sunt rezultate -->
   @if (filteredTables.length === 0 && musicShopService.title() && musicShopService.title().trim() !== '') {
     <div class="no-results-section">
       <div class="no-results-content">
@@ -69,7 +67,6 @@
     </div>
   }
 
-  <!-- Tabel cu produse - afișează doar rândurile filtrate și sortate -->
   <nz-table 
     #tableTable 
     [nzData]="filteredTables" 

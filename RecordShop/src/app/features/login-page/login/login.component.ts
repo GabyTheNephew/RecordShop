@@ -39,7 +39,6 @@ export class LoginComponent {
       try {
         const { username, password, remember } = this.validateForm.value;
 
-        // Folosește AuthService pentru login
         await this.authService.signIn(username!, password!, remember!);
 
         this.message.success('Login successful!');
@@ -60,18 +59,4 @@ export class LoginComponent {
       });
     }
   }
-
-  // submitForm(): void {
-  //   if (this.validateForm.valid) {
-  //     console.log('submit', this.validateForm.value);
-  //     this.router.navigate(['/home']);
-  //   } else {
-  //     Object.values(this.validateForm.controls).forEach(control => {
-  //       if (control.invalid) {
-  //         control.markAsDirty();
-  //         control.updateValueAndValidity({ onlySelf: true });
-  //       }
-  //     });
-  //   }
-  // }
 }

@@ -87,22 +87,20 @@ export class TableComponent implements OnInit, OnDestroy {
   loadData() {
     this.tableService.getAll().subscribe(data => {
       this.allTables = data;
-      this.applyFiltersAndSort(); // Aplică filtrele și sortarea
-      this.checkForSearch(); // Verifică dacă există căutare activă
+      this.applyFiltersAndSort();
+      this.checkForSearch();
     });
   }
 
   private setupSearchSubscription() {
-    // Urmărește schimbările în titlul de căutare folosind polling
     setInterval(() => {
       this.checkForSearch();
-    }, 100); // Verifică la fiecare 100ms
+    }, 100);
   }
 
   private checkForSearch() {
     const currentSearchTerm = this.musicShopService.title();
-    
-    // Doar dacă termenul s-a schimbat
+
     if (currentSearchTerm !== this.lastSearchTerm) {
       this.lastSearchTerm = currentSearchTerm;
       this.applyFiltersAndSort();
@@ -110,62 +108,51 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   private performSearch(searchTerm: string): Table[] {
-    console.log('=== TABLE SEARCH ===');
-    console.log('Search term:', searchTerm);
-
     const term = searchTerm.toLowerCase();
-    
-    // Filtrează tabelele care conțin termenul de căutare în diverse câmpuri
-    const filtered = this.allTables.filter(table => 
+
+    const filtered = this.allTables.filter(table =>
       table.albumName.toLowerCase().includes(term) ||
       table.controlNumber.toLowerCase().includes(term) ||
       table.productType.toLowerCase().includes(term)
     );
-
-    console.log('Filtered tables count:', filtered.length);
-    console.log('=== END TABLE SEARCH ===');
-    
     return filtered;
   }
 
   private applyFiltersAndSort() {
     let result = [...this.allTables];
-    
-    // Aplică filtrul de căutare dacă există
+
     const searchTerm = this.musicShopService.title();
     if (searchTerm && searchTerm.trim() !== '') {
       result = this.performSearch(searchTerm);
     }
-    
-    // Aplică sortarea dacă există
+
     if (this.currentSortOption) {
       result = this.applySorting(result, this.currentSortOption);
     }
-    
+
     this.filteredTables = result;
   }
 
   private applySorting(data: Table[], sortOption: string): Table[] {
     const [field, direction] = sortOption.split('-');
     const isAscending = direction === 'asc';
-    
+
     return [...data].sort((a, b) => {
       let valueA: any = a[field as keyof Table];
       let valueB: any = b[field as keyof Table];
-      
-      // Convertește la lowercase pentru sortarea string-urilor
+
       if (typeof valueA === 'string') {
         valueA = valueA.toLowerCase();
         valueB = valueB.toLowerCase();
       }
-      
+
       let comparison = 0;
       if (valueA > valueB) {
         comparison = 1;
       } else if (valueA < valueB) {
         comparison = -1;
       }
-      
+
       return isAscending ? comparison : -comparison;
     });
   }
@@ -180,7 +167,6 @@ export class TableComponent implements OnInit, OnDestroy {
     this.applyFiltersAndSort();
   }
 
-  // Getter pentru titlul secțiunii
   get sectionTitle(): string {
     const searchTerm = this.musicShopService.title();
     if (searchTerm && searchTerm.trim() !== '') {
@@ -189,7 +175,6 @@ export class TableComponent implements OnInit, OnDestroy {
     return 'Product Inventory Management';
   }
 
-  // Getter pentru informații despre căutare
   get searchInfo(): string {
     const searchTerm = this.musicShopService.title();
     if (searchTerm && searchTerm.trim() !== '') {
@@ -198,7 +183,6 @@ export class TableComponent implements OnInit, OnDestroy {
     return '';
   }
 
-  // Metodă pentru a curăța căutarea
   clearSearch() {
     this.musicShopService.clearSearch();
     this.applyFiltersAndSort();
@@ -242,7 +226,6 @@ export class TableComponent implements OnInit, OnDestroy {
 
     try {
       if (this.isEditMode && this.editingTableId !== null) {
-        // Edit existing table
         const tableIndex = this.allTables.findIndex(t => t.id === this.editingTableId);
         if (tableIndex !== -1) {
           this.allTables = [
@@ -253,20 +236,16 @@ export class TableComponent implements OnInit, OnDestroy {
           this.message.success('Table updated successfully');
         }
       } else {
-        // Add new table
         const maxId = this.allTables.length > 0 ? Math.max(...this.allTables.map(t => t.id)) : 0;
         const newTable = { ...formData, id: maxId + 1 };
         this.allTables = [...this.allTables, newTable];
         this.message.success('Table added successfully');
       }
 
-      // Save to localStorage
       this.tableService.saveTables(this.allTables);
 
-      // Reapply filters and sorting
       this.applyFiltersAndSort();
 
-      // Close modal and reset form
       this.isModalVisible = false;
       this.tableForm.reset();
       this.isEditMode = false;
@@ -290,18 +269,17 @@ export class TableComponent implements OnInit, OnDestroy {
   deleteTable(table: Table): void {
     this.allTables = this.allTables.filter(t => t.id !== table.id);
     this.tableService.saveTables(this.allTables);
-    
-    // Reapply filters and sorting
+
     this.applyFiltersAndSort();
-    
+
     this.message.success('Table deleted successfully');
   }
 
   resetToOriginalData(): void {
     this.tableService.resetToInitial().subscribe(data => {
       this.allTables = data;
-      this.currentSortOption = null; // Reset sorting
-      this.applyFiltersAndSort(); // Reapply filters after reset
+      this.currentSortOption = null;
+      this.applyFiltersAndSort();
       this.message.success('Data has been reset to original values');
     });
   }
